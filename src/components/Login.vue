@@ -1,7 +1,7 @@
 <template>
-  <v-layout fill-height column justify-space-around class="background" xs12>
+  <v-layout fill-height column justify-space-around class="background">
     <v-container xs6>
-      <v-flex text-xs-center xs12>
+      <v-flex text-xs-center xs>
         <v-flex text-xs-center>
           <h1 class="display-2 font-weight-bold mb-3 white--text">
             Recognize my cat
@@ -9,15 +9,13 @@
         </v-flex>
         <v-spacer></v-spacer>
 
-        <v-flex xs4 text-xs-center>
-          <v-flex text-xs-center>
-            <v-text-field
-              dark
-              label="Enter your pseudo"
-              outline
-              single-line
-            ></v-text-field>
-          </v-flex>
+        <v-flex offset-xs4 xs4 text-xs-center>
+          <v-text-field
+            dark
+            label="Enter your pseudo"
+            outline
+            single-line
+          ></v-text-field>
         </v-flex>
         <v-spacer></v-spacer>
 
