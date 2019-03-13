@@ -16,6 +16,9 @@
       <v-btn to="/login" outline>
         Login vue
       </v-btn>
+      <v-btn to="/game" outline>
+        Game vue
+      </v-btn>
     </v-toolbar>
 
     <v-content>

@@ -90,6 +90,6 @@ export default {
 
 <style scopped>
 .background {
-  background-color: #464646;
+  background-color: #535759;
 }
 </style>
