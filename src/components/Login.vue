@@ -37,26 +37,7 @@
 export default {
   data: () => {
     return {
-      items: [
-        {
-          src: "https://randomuser.me/api/portraits/lego/8.jpg"
-        },
-        {
-          src: "https://randomuser.me/api/portraits/lego/7.jpg"
-        },
-        {
-          src: "https://randomuser.me/api/portraits/lego/6.jpg"
-        },
-        {
-          src: "https://randomuser.me/api/portraits/lego/5.jpg"
-        },
-        {
-          src: "https://randomuser.me/api/portraits/lego/4.jpg"
-        },
-        {
-          src: "https://randomuser.me/api/portraits/lego/3.jpg"
-        }
-      ]
+      wordToGuess =  "cat"
     };
   }
 };
@@ -64,6 +45,6 @@ export default {
 
 <style scopped>
 .background {
-  background-color: #464646;
+  background-color: #535759;
 }
 </style>
