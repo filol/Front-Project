@@ -25,6 +25,7 @@
           height="100"
           xs6
           hide-delimiters
+          :cycle="false"
         >
           <v-carousel-item :key="i" v-for="i in getNumberPagesPictures()">
             <v-layout row>
