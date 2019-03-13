@@ -22,13 +22,14 @@
         <v-carousel
           class="elevation-0"
           width="50"
-          height="200"
-          hide-delimiters
+          height="100"
           xs6
+          hide-delimiters
+          cycle="false"
         >
-          <v-carousel-item :key="i" v-for="i in 2">
+          <v-carousel-item :key="i" v-for="i in getNumberPagesPictures()">
             <v-layout row>
-              <v-flex xs4 :key="j" v-for="(item, j) in items">
+              <v-flex xs4 :key="item" v-for="item in getPictures(i - 1)">
                 <v-avatar :size="100" color="grey lighten-4">
                   <img :src="item.src" alt />
                 </v-avatar>
@@ -48,6 +49,7 @@
 export default {
   data: () => {
     return {
+      numberAvatarByPage: 3,
       items: [
         {
           src: 'https://randomuser.me/api/portraits/lego/8.jpg'
@@ -66,8 +68,22 @@ export default {
         },
         {
           src: 'https://randomuser.me/api/portraits/lego/3.jpg'
+        },
+        {
+          src: 'https://randomuser.me/api/portraits/lego/2.jpg'
         }
       ]
+    }
+  },
+  methods: {
+    getPictures (index) {
+      return this.items.slice(
+        this.numberAvatarByPage * index,
+        this.numberAvatarByPage * (index + 1)
+      )
+    },
+    getNumberPagesPictures () {
+      return Math.ceil(this.items.length / this.numberAvatarByPage)
     }
   }
 }
