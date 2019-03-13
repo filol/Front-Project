@@ -50,10 +50,6 @@
 export default {
   data: () => {
     return {
-<<<<<<< HEAD
-      wordToGuess =  "cat"
-    };
-=======
       items: [
         {
           src: 'https://randomuser.me/api/portraits/lego/8.jpg'
@@ -75,7 +71,6 @@ export default {
         }
       ]
     }
->>>>>>> 2578798a9f70297185f1d14e1ba451f9a9a7712f
   }
 }
 </script>
