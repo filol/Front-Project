@@ -30,9 +30,31 @@
             <v-carousel-item :key="i" v-for="i in getNumberPagesPictures()">
               <v-layout row>
                 <v-flex xs4 :key="j" v-for="(item, j) in getPictures(i - 1)">
-                  <v-avatar :size="100" color="grey lighten-4">
-                    <img :src="item.src" alt />
-                  </v-avatar>
+                  <v-badge
+                    overlap
+                    v-if="selectedAvatar == i * numberAvatarByPage + j"
+                  >
+                    <template v-slot:badge>
+                      <v-icon>done</v-icon>
+                    </template>
+                    <v-avatar
+                      @click="selectAvatar(i, j)"
+                      :size="100"
+                      color="grey lighten-4"
+                    >
+                      <img :src="item.src" alt />
+                    </v-avatar>
+                  </v-badge>
+
+                  <v-badge overlap v-else>
+                    <v-avatar
+                      @click="selectAvatar(i, j)"
+                      :size="100"
+                      color="grey lighten-4"
+                    >
+                      <img :src="item.src" alt />
+                    </v-avatar>
+                  </v-badge>
                 </v-flex>
               </v-layout>
             </v-carousel-item>
@@ -52,6 +74,7 @@ export default {
   data: () => {
     return {
       numberAvatarByPage: 3,
+      selectedAvatar: 1,
       items: [
         {
           src: 'https://randomuser.me/api/portraits/lego/8.jpg'
@@ -86,6 +109,9 @@ export default {
     },
     getNumberPagesPictures () {
       return Math.ceil(this.items.length / this.numberAvatarByPage)
+    },
+    selectAvatar (indexPage, index) {
+      this.selectedAvatar = indexPage * this.numberAvatarByPage + index
     }
   }
 }
