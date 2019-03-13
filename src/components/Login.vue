@@ -25,11 +25,10 @@
           height="100"
           xs6
           hide-delimiters
-          cycle="false"
         >
           <v-carousel-item :key="i" v-for="i in getNumberPagesPictures()">
             <v-layout row>
-              <v-flex xs4 :key="item" v-for="item in getPictures(i - 1)">
+              <v-flex xs4 :key="j" v-for="(item, j) in getPictures(i - 1)">
                 <v-avatar :size="100" color="grey lighten-4">
                   <img :src="item.src" alt />
                 </v-avatar>
