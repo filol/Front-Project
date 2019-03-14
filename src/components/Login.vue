@@ -1,5 +1,5 @@
 <template>
-  <v-layout fill-height column class="background">
+  <v-layout fill-height column class="mybackground">
     <v-container xs6>
       <v-layout column fill-height justify-space-around text-xs-center xs>
         <v-flex text-xs-center>
@@ -110,8 +110,8 @@ export default {
 }
 </script>
 
-<style scopped>
-.background {
-  background-color: #535759;
+<style >
+.mybackground {
+  background-color: var(--v-background-base);
 }
 </style>

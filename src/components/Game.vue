@@ -34,17 +34,16 @@ export default {
   data: () => {
     return {
       image:
-        "http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg"
-    };
+        'http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg'
+    }
   }
-};
+}
 </script>
-
 
 <style scopped>
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 .page {
-  background-color: #535759;
+  background-color: var(--v-background-base);
   width: 100;
   height: 100%;
   color: #b99458;
@@ -55,8 +54,4 @@ export default {
 .part2 {
   background-color: red;
 }
-
-
 </style>
-
-
