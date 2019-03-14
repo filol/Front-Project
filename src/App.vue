@@ -1,24 +1,19 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
+    <v-toolbar app class="elevation-0 boxhead" color="background">
+      <router-link to="/">
+        <v-toolbar-title class="headline text-uppercase">
+          <span class="white--text">RECOGNIZE</span>
+          <span class="font-weight-light white--text">MY CAT</span>
+        </v-toolbar-title>
+      </router-link>
+
       <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-      <v-btn to="/login" outline>
-        Login vue
-      </v-btn>
-      <v-btn to="/game" outline>
-        Game vue
-      </v-btn>
+
+      <v-btn to="/" class="white--text" flat>Home</v-btn>
+      <v-btn to="/login" class="white--text" flat>Login</v-btn>
+      <v-btn to="/game" class="white--text" flat>Game</v-btn>
+      <v-btn to="/about" class="white--text" flat>About</v-btn>
     </v-toolbar>
 
     <v-content>
@@ -38,3 +33,10 @@ export default {
   }
 }
 </script>
+
+<style scopped>
+.boxhead a {
+  color: #ffffff;
+  text-decoration: none;
+}
+</style>

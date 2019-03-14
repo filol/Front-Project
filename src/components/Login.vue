@@ -3,7 +3,7 @@
     <v-container xs6>
       <v-layout column fill-height justify-space-around text-xs-center xs>
         <v-flex text-xs-center>
-          <h1 class="display-2 font-weight-bold mb-3 white--text">Recognize my cat</h1>
+          <h1 class="display-2 font-weight-bold mb-3 white--text">Welcome in The game</h1>
         </v-flex>
 
         <v-flex>
