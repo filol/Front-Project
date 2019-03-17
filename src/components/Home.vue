@@ -5,7 +5,7 @@
     <v-container fluid fill-height text-xs-center class="foreground">
       <v-layout row align-center>
         <v-flex>
-          <v-btn large color="success">Start the game !</v-btn>
+          <v-btn to="/login" large color="success">Start the game !</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -33,6 +33,7 @@ export default {
   position: absolute;
   pointer-events: none;
 }
+a,
 button {
   pointer-events: all;
 }
