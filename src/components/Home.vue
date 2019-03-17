@@ -1,9 +1,11 @@
 <template>
   <v-layout fill-height column class="mybackground">
-    <v-container xs6>
-      <v-layout column fill-height justify-space-around text-xs-center xs>
-        <v-flex text-xs-center>
-          <h1 class="display-2 font-weight-bold mb-3 white--text">HOME</h1>
+    <particlesJS/>
+
+    <v-container fluid fill-height text-xs-center class="foreground">
+      <v-layout row align-center>
+        <v-flex>
+          <v-btn large color="success">Start the game !</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -11,16 +13,27 @@
 </template>
 
 <script>
+import particlesJS from './ParticlesJS'
+
 export default {
   data: () => {
     return {}
   },
-  methods: {}
+  methods: {},
+  components: { particlesJS }
+
 }
 </script>
 
 <style >
 .mybackground {
   background-color: var(--v-background-base);
+}
+.foreground {
+  position: absolute;
+  pointer-events: none;
+}
+button {
+  pointer-events: all;
 }
 </style>
