@@ -2,7 +2,7 @@
   <div class="page">
     <v-container>
       <v-layout row class="display-1" text-md-center wrap>
-        <v-flex class="part2" justify-center order-md1 order-xs2 md3>Profil joueur</v-flex>
+        <Player/>
         <v-flex class="part1" justify-center order-md1 md9>Guess the key word of the image:
           <v-layout row class="display-1" text-md-center>
             <v-flex xs8 offset-xs2>
@@ -30,13 +30,16 @@
 </template>
 
 <script>
+import Player from './Player'
 export default {
   data: () => {
     return {
       image:
         'http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg'
     }
-  }
+  },
+  methods: {},
+  components: { Player }
 }
 </script>
 
@@ -51,7 +54,5 @@ export default {
 .part1 {
   background-color: green;
 }
-.part2 {
-  background-color: red;
-}
+
 </style>
