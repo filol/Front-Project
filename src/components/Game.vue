@@ -3,8 +3,9 @@
     <v-container>
       <v-layout row class="display-1" text-md-center wrap>
         <Player/>
-        <v-flex class="part1" justify-center order-md1 md9>Guess the key word of the image:
-          <v-layout row class="display-1" text-md-center>
+        <v-flex class="gameContainer" justify-center order-md1 md9>
+          Guess the key word of the image:
+          <v-layout row class="display-1 gameImage" text-md-center>
             <v-flex xs8 offset-xs2>
               <v-layout column>
                 <v-img max-height="800px" v-bind:src="image" aspect-ratio="1.7"></v-img>
@@ -51,8 +52,11 @@ export default {
   height: 100%;
   color: #b99458;
 }
-.part1 {
+.gameContainer {
   background-color: green;
+}
+.gameImage {
+  margin-top: 20px;
 }
 
 </style>
