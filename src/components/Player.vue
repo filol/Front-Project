@@ -13,6 +13,6 @@ export default {
 
 <style scopped>
 .playerContainer {
-  background-color: yellow;
+  /* background-color: yellow; FOR DEBUG PURPOSES */
 }
 </style>
