@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <v-container>
-      <v-layout row class="display-1" text-md-center wrap>
+      <v-layout row class="display-1" text-xs-center wrap>
         <Player/>
         <v-flex class="gameContainer" justify-center order-md1 md9>
           Guess the key word of the image:
