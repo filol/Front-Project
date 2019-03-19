@@ -7,7 +7,7 @@
         </v-flex>
 
         <v-flex>
-          <v-flex offset-xs4 xs4 text-xs-center>
+          <v-flex offset-sm4 sm4 text-sm-center>
             <v-text-field dark label="Enter your pseudo" outline single-line></v-text-field>
           </v-flex>
           <v-spacer></v-spacer>
