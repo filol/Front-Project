@@ -24,14 +24,19 @@
             hide-delimiters
             :cycle="false"
           >
-            <v-carousel-item :key="i" v-for="i in getNumberPagesPicturesArray()">
-              <v-layout row class="pt-2">
-                <v-flex xs4 :key="j" v-for="(item, j) in getPictures(i)">
+            <v-carousel-item text-xs-center :key="i" v-for="i in getNumberPagesPicturesArray()">
+              <v-layout text-xs-center row class="pt-2">
+                <v-flex text-xs-center xs4 :key="j" v-for="(item, j) in getPictures(i)">
                   <v-badge overlap v-if="selectedAvatar == i * numberAvatarByPage + j">
                     <template v-slot:badge>
                       <v-icon>done</v-icon>
                     </template>
-                    <v-avatar @click="selectAvatar(i, j)" :size="100" color="grey lighten-4">
+                    <v-avatar
+                      text-xs-center
+                      @click="selectAvatar(i, j)"
+                      :size="100"
+                      color="grey lighten-4"
+                    >
                       <img :src="item.src" alt>
                     </v-avatar>
                   </v-badge>
@@ -59,7 +64,6 @@
 export default {
   data: () => {
     return {
-      numberAvatarByPage: 3,
       selectedAvatar: 1,
       items: [
         {
@@ -105,6 +109,18 @@ export default {
     },
     selectAvatar (indexPage, index) {
       this.selectedAvatar = indexPage * this.numberAvatarByPage + index
+    }
+  },
+  computed: {
+    numberAvatarByPage () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 1
+        case 'sm': return 1
+        case 'md': return 3
+        case 'lg': return 3
+        case 'xl': return 3
+        default: return 3
+      }
     }
   }
 }
