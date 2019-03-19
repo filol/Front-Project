@@ -9,11 +9,25 @@
       </router-link>
 
       <v-spacer></v-spacer>
-
-      <v-btn to="/" class="white--text" flat>Home</v-btn>
-      <v-btn to="/login" class="white--text" flat>Login</v-btn>
-      <v-btn to="/game" class="white--text" flat>Game</v-btn>
-      <v-btn to="/about" class="white--text" flat>About</v-btn>
+      <v-toolbar-items class="hidebuttons">
+        <v-btn
+          v-for="item in menu"
+          :key="item.title"
+          :to="item.link"
+          class="white--text"
+          flat
+        >{{ item.title }}</v-btn>
+      </v-toolbar-items>
+      <v-menu class="hidemenu">
+        <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
+        <v-list>
+          <v-list-tile v-for="item in menu" :key="item.title">
+            <v-list-tile-content :to="item.link">
+              <v-btn :to="item.link" flat>{{ item.title }}</v-btn>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
 
     <v-content>
@@ -28,7 +42,12 @@ export default {
   components: {},
   data () {
     return {
-      //
+      menu: [
+        { title: 'Home', link: '/' },
+        { title: 'Login', link: '/login' },
+        { title: 'Game', link: '/game' },
+        { title: 'About', link: '/about' }
+      ]
     }
   }
 }
@@ -38,5 +57,15 @@ export default {
 .boxhead a {
   color: #ffffff;
   text-decoration: none;
+}
+@media (min-width: 650px) {
+  .hidemenu {
+    display: none;
+  }
+}
+@media (max-width: 651px) {
+  .hidebuttons {
+    display: none;
+  }
 }
 </style>
