@@ -58,9 +58,7 @@ export default {
   height: 100%;
   color: #b99458;
 }
-.gameContainer {
-  background-color: ; 
-}
+
 .gameImage {
   margin-top: 20px;
 }
