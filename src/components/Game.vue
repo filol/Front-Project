@@ -59,7 +59,7 @@ export default {
   color: #b99458;
 }
 .gameContainer {
-  /*background-color: green;  FOR DEBUG PURPOSES */
+  background-color: ; 
 }
 .gameImage {
   margin-top: 20px;
