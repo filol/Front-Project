@@ -16,39 +16,29 @@
             <h2 class="display-6 font-weight-bold mb-3 white--text">Choose your avatar</h2>
           </v-flex>
 
-          <v-carousel
-            class="elevation-0"
-            width="50"
-            height="125"
-            xs6
-            hide-delimiters
-            :cycle="false"
-          >
-            <v-carousel-item text-xs-center :key="i" v-for="i in getNumberPagesPicturesArray()">
-              <v-layout text-xs-center row class="pt-2">
-                <v-flex text-xs-center xs4 :key="j" v-for="(item, j) in getPictures(i)">
-                  <v-badge overlap v-if="selectedAvatar == i * numberAvatarByPage + j">
-                    <template v-slot:badge>
-                      <v-icon>done</v-icon>
-                    </template>
-                    <v-avatar
-                      text-xs-center
-                      @click="selectAvatar(i, j)"
-                      :size="100"
-                      color="grey lighten-4"
-                    >
-                      <img :src="item.src" alt>
-                    </v-avatar>
-                  </v-badge>
+          <v-carousel class="elevation-0" height="125" xs6 hide-delimiters :cycle="false">
+            <v-flex>
+              <v-carousel-item :key="i" v-for="i in getNumberPagesPicturesArray()">
+                <v-layout justify-center row class="pt-2">
+                  <v-flex text-xs-center xs4 :key="j" v-for="(item, j) in getPictures(i)">
+                    <v-badge overlap v-if="selectedAvatar == i * numberAvatarByPage + j">
+                      <template v-slot:badge>
+                        <v-icon>done</v-icon>
+                      </template>
+                      <v-avatar @click="selectAvatar(i, j)" :size="100" color="grey lighten-4">
+                        <img :src="item.src" alt>
+                      </v-avatar>
+                    </v-badge>
 
-                  <v-badge overlap v-else>
-                    <v-avatar @click="selectAvatar(i, j)" :size="100" color="grey lighten-4">
-                      <img :src="item.src" alt>
-                    </v-avatar>
-                  </v-badge>
-                </v-flex>
-              </v-layout>
-            </v-carousel-item>
+                    <v-badge overlap v-else>
+                      <v-avatar @click="selectAvatar(i, j)" :size="100" color="grey lighten-4">
+                        <img :src="item.src" alt>
+                      </v-avatar>
+                    </v-badge>
+                  </v-flex>
+                </v-layout>
+              </v-carousel-item>
+            </v-flex>
           </v-carousel>
         </v-flex>
 
@@ -115,7 +105,7 @@ export default {
     numberAvatarByPage () {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return 1
-        case 'sm': return 1
+        case 'sm': return 3
         case 'md': return 3
         case 'lg': return 3
         case 'xl': return 3
