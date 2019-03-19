@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="playerContainer" justify-center order-md1 order-xs2 md3>Profil joueur</v-flex>
+  <v-flex class="playerContainer" justify-center order-sm1 order-xs2 md3>Profil joueur</v-flex>
 </template>
 
 <script>

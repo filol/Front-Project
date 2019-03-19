@@ -1,9 +1,10 @@
 <template>
   <div class="page">
     <v-container>
-      <v-layout row class="display-1" text-xs-center wrap>
+      <v-layout row class="display-1" text-xs-center  wrap>
         <Player/>
-        <v-flex class="gameContainer" justify-center order-md1 md9>
+        <v-flex class="gameContainer" order-sm2 order-xs1 justify-center md9>
+
           Guess the key word of the image:
           <v-layout row class="display-1 gameImage" text-md-center>
             <v-flex xs8 offset-xs2>
@@ -25,6 +26,9 @@
               <p>Entered word : </p><div class="userInput">{{ playerWordInput }}</div>
             </v-flex>
           </v-layout>
+
+
+
         </v-flex>
       </v-layout>
     </v-container>
