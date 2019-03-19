@@ -34,12 +34,12 @@
 export default {
   data: () => {
     return {
-      playerAvatar: "https://randomuser.me/api/portraits/lego/2.jpg",
-      playerName: "Musinux",
+      playerAvatar: 'https://randomuser.me/api/portraits/lego/2.jpg',
+      playerName: 'Musinux',
       playerScore: 4
-    };
+    }
   }
-};
+}
 </script>
 
 <style scopped>
