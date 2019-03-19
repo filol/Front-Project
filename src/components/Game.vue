@@ -15,13 +15,14 @@
 
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs8 offset-xs2>
-              <v-text-field label="Solo" placeholder="Your word" solo></v-text-field>
+              <v-text-field v-model="playerWordInput" label="Solo" placeholder="Your word" solo></v-text-field>
             </v-flex>
           </v-layout>
 
           <v-layout row class="display-1" text-md-center>
-            <v-flex justify-center xs4 offset-xs4>
+            <v-flex justify-center xs8 offset-xs2>
               <v-btn color="#b99458" large>Validate</v-btn>
+              <p>Entered word : </p><div class="userInput">{{ playerWordInput }}</div>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -35,6 +36,7 @@ import Player from './Player'
 export default {
   data: () => {
     return {
+      playerWordInput: '',
       image:
         'http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg'
     }
@@ -57,6 +59,10 @@ export default {
 }
 .gameImage {
   margin-top: 20px;
+}
+.userInput {
+  color: white;
+  display: inline
 }
 
 </style>
