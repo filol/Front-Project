@@ -7,7 +7,7 @@
 
           <v-layout row class="display-1 playerAvatar" text-md-center>
             <v-flex xs10 offset-xs1>
-              <v-avatar :tile="tile" :size="avatarSize" color="grey lighten-4">
+              <v-avatar color="grey lighten-4">
                 <img v-bind:src="playerAvatar" alt="avatar">
               </v-avatar>
             </v-flex>
@@ -15,13 +15,13 @@
 
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs10 offset-xs1>
-              <p>{{playerName}}</p>
+              <p>{{ playerName }}</p>
             </v-flex>
           </v-layout>
 
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs10 offset-xs1>
-              <p>Score: {{playerScore}}</p>
+              <p>Score: {{ playerScore }}</p>
             </v-flex>
           </v-layout>
         </v-card>
@@ -36,8 +36,13 @@ export default {
     return {
       playerAvatar: 'https://randomuser.me/api/portraits/lego/2.jpg',
       playerName: 'Musinux',
-      playerScore: 4
+      playerScore: 0
     }
+  },
+  mounted () {
+    this.playerAvatar = this.$store.state.avatar
+    this.playerName = this.$store.state.pseudo
+    this.playerScore = this.$store.state.score
   }
 }
 </script>

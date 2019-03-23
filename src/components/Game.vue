@@ -9,7 +9,7 @@
           order-xs1
           justify-center
           md9
-        >Guess the key word of the image:
+        > Guess the key word of the image ( {{ word.length }} letters ) :
           <v-layout row class="display-1 gameImage" text-md-center>
             <v-flex xs8 offset-xs2>
               <v-layout column>
@@ -23,10 +23,23 @@
               <v-text-field v-model="playerWordInput" label="Solo" placeholder="Your word" solo></v-text-field>
             </v-flex>
           </v-layout>
-
+          <v-alert
+                  :value="true"
+                  type="success"
+                  v-if="hasWin"
+          >
+            Congratulation ! You find the word {{ previousWord }}
+          </v-alert>
+          <v-alert
+                  :value="true"
+                  type="error"
+                  v-if="hasLose"
+          >
+            You Lose ! You didn't find the word {{ previousWord }} in 10 attempt
+          </v-alert>
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs8 offset-xs2>
-              <v-btn color="#b99458" large>Validate</v-btn>
+              <v-btn color="#b99458" large @click="validate">Validate</v-btn>
               <p>Entered word :</p>
               <div class="userInput">{{ playerWordInput }}</div>
             </v-flex>
@@ -39,15 +52,66 @@
 
 <script>
 import Player from './Player'
+import dictionary from '../assets/dictionary'
+
 export default {
   data: () => {
     return {
       playerWordInput: '',
-      image:
-        'http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg'
+      image: '',
+      word: '',
+      numImg: 0,
+      previousWord: '',
+      hasWin: false,
+      hasLose: false
     }
   },
-  methods: {},
+  mounted () {
+    this.setWord()
+  },
+  methods: {
+    async setWord () {
+      let numWord = parseInt(Math.random() * dictionary.length)
+      this.word = dictionary[numWord]
+      const {
+        data: { photos }
+      } = await this.$http('https://api.pexels.com/v1/search', {
+        params: { query: this.word, per_page: 10, page: 1 },
+        headers: { Authorization: '563492ad6f9170000100000162a8ad9e59b34275992db6f903ddd7b9' }
+      })
+      if (photos.length < 10) this.setWord()
+      else {
+        console.log(this.word)
+        this.images = photos
+        this.image = photos[0].src.landscape
+        this.numImg = 0
+      }
+    },
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    async validate () {
+      console.log('validation')
+      if (this.playerWordInput === this.word) {
+        this.previousWord = this.word
+        this.setWord()
+        this.$store.commit('INCREASE_SCORE', 50)
+        this.hasWin = true
+        await this.sleep(2000)
+        this.hasWin = false
+      } else {
+        this.$store.commit('DECREASE_SCORE', 10)
+        this.numImg++
+        if (this.numImg === 10) {
+          this.previousWord = this.word
+          this.setWord()
+          this.hasLose = true
+          await this.sleep(2000)
+          this.hasLose = false
+        } else this.image = this.images[this.numImg].src.landscape
+      }
+    }
+  },
   components: { Player }
 }
 </script>
@@ -56,7 +120,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 .page {
   background-color: var(--v-background-base);
-  width: 100;
+  width: 100%;
   height: 100%;
   color: #b99458;
 }

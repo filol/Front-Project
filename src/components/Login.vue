@@ -8,14 +8,13 @@
 
         <v-flex>
           <v-flex offset-sm4 sm4 text-sm-center>
-            <v-text-field dark label="Enter your pseudo" outline single-line></v-text-field>
+            <v-text-field dark label="Enter your pseudo" outline single-line v-on:keyup="setPseudo"></v-text-field>
           </v-flex>
           <v-spacer></v-spacer>
 
           <v-flex text-xs-center>
             <h2 class="display-6 font-weight-bold mb-3 white--text">Choose your avatar</h2>
           </v-flex>
-
           <v-carousel class="elevation-0" height="125" xs6 hide-delimiters :cycle="false">
             <v-flex>
               <v-carousel-item :key="i" v-for="i in getNumberPagesPicturesArray()">
@@ -43,7 +42,7 @@
         </v-flex>
 
         <div class="text-xs-center">
-          <v-btn class="white--text" color="green">Start !</v-btn>
+            <v-btn class="white--text" color="green" @click="start" >Start !</v-btn>
         </div>
       </v-layout>
     </v-container>
@@ -51,10 +50,12 @@
 </template>
 
 <script>
+
 export default {
   data: () => {
     return {
       selectedAvatar: 1,
+      pseudo: '',
       items: [
         {
           src: 'https://randomuser.me/api/portraits/lego/8.jpg'
@@ -99,7 +100,17 @@ export default {
     },
     selectAvatar (indexPage, index) {
       this.selectedAvatar = indexPage * this.numberAvatarByPage + index
+      this.$store.commit('SET_AVATAR', this.items[index].src)
+    },
+    setPseudo (pseudo) {
+      this.$store.commit('SET_PSEUDO', pseudo.target.value)
+    },
+    start () {
+      this.$router.push({ name: 'game' })
     }
+  },
+  async created () {
+    console.log(this.$store)
   },
   computed: {
     numberAvatarByPage () {
