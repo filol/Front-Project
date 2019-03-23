@@ -89,10 +89,6 @@ export default {
 
       if (currentUser) {
         db.collection('users').where('pseudo', '==', this.$store.state.pseudo).get().then((doc) => {
-          console.log('pseudo = ' + this.$store.state.pseudo)
-          console.log('Size = ' + doc.docs.length)
-          console.log(doc.docs)
-          console.log(doc.docs[0])
           db.collection('highscore').add({
             score: this.$store.state.score,
             idUser: doc.docs[0].id

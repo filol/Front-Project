@@ -158,12 +158,10 @@ export default {
 
     if (currentUser) {
       var db = firebase.firestore()
-      console.log('email = ' + currentUser.email)
       var docRef = db.collection('users').where('email', '==', currentUser.email)
 
       docRef.get().then((snapshot) => {
         if (!snapshot.empty) {
-          console.log(snapshot.docs[0].data())
           // L'utilisateur à déjà son pseudo d'inscrit dans la bdd
           this.$store.commit('SET_PSEUDO', snapshot.docs[0].data().pseudo)
           this.$store.commit('SET_AVATAR', snapshot.docs[0].data().avatar)
