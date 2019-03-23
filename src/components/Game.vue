@@ -88,7 +88,7 @@ export default {
       }
     },
     sleep (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise(resolve => setTimeout(resolve, ms))
     },
     async validate () {
       console.log('validation')

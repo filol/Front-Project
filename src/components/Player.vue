@@ -3,7 +3,7 @@
     <v-layout row class="display-1" text-md-center>
       <v-flex xs12 sm12>
         <v-card color="grey darken-1">
-          <v-img v-bind:src="playerAvatar" aspect-ratio="2.75" max-height="200px"></v-img>
+          <v-img v-bind:src="$store.state.avatar" aspect-ratio="2.75" max-height="200px"></v-img>
 
           <v-layout row class="display-1 playerAvatar" text-md-center>
             <v-flex xs10 offset-xs1>
@@ -15,13 +15,13 @@
 
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs10 offset-xs1>
-              <p>{{ playerName }}</p>
+              <p>{{ $store.state.pseudo }}</p>
             </v-flex>
           </v-layout>
 
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs10 offset-xs1>
-              <p>Score: {{ playerScore }}</p>
+              <p>Score: {{ $store.state.score }}</p>
             </v-flex>
           </v-layout>
         </v-card>
