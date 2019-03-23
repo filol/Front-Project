@@ -11,7 +11,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidebuttons">
         <v-btn
-          v-for="item in menu"
+          v-for="item in getMenu"
           :key="item.title"
           :to="item.link"
           class="white--text"
@@ -21,7 +21,7 @@
       <v-menu class="hidemenu">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
         <v-list>
-          <v-list-tile v-for="item in menu" :key="item.title">
+          <v-list-tile v-for="item in getMenu" :key="item.title">
             <v-list-tile-content :to="item.link">
               <v-btn :to="item.link" flat>{{ item.title }}</v-btn>
             </v-list-tile-content>
@@ -37,23 +37,47 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'App',
   components: {},
   data () {
     return {
-      menu: [
-        { title: 'Home', link: '/' },
-        { title: 'Login', link: '/login' },
-        { title: 'Game', link: '/game' },
-        { title: 'About', link: '/about' }
-      ]
+    }
+  },
+  computed: {
+    getMenu () {
+      var currentUser = firebase.auth().currentUser
+      var menu
+      if (currentUser) {
+        menu =
+          [
+            { title: 'Home', link: '/' },
+            { title: 'Game', link: '/startgame' },
+            { title: 'Highscore', link: '/highscore' },
+            { title: 'About', link: '/about' },
+            { title: 'SignOut', link: '/signout' }
+
+          ]
+      } else {
+        menu =
+          [
+            { title: 'Home', link: '/' },
+            { title: 'Game', link: '/startgame' },
+            { title: 'Highscore', link: '/highscore' },
+            { title: 'About', link: '/about' },
+            { title: 'Login', link: '/login' },
+            { title: 'SignUp', link: '/signup' }
+          ]
+      }
+      return menu
     }
   }
 }
 </script>
 
-<style scopped>
+<style>
 .boxhead a {
   color: #ffffff;
   text-decoration: none;
@@ -67,5 +91,23 @@ export default {
   .hidebuttons {
     display: none;
   }
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#nav {
+  padding: 30px;
+}
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
