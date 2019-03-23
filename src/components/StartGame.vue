@@ -114,7 +114,7 @@ export default {
       const myavatar = this.items[this.selectedAvatar].src
       const currentUser = firebase.auth().currentUser
       var db = firebase.firestore()
-      var docRef = db.collection('users').doc(this.pseudo)
+      var docRef = db.collection('users').where('pseudo', '==', this.pseudo)
 
       docRef.get().then(function (doc) {
         if (doc.exists) {
@@ -130,7 +130,8 @@ export default {
         } else {
           if (currentUser) {
             // add pseudo to databse
-            db.collection('users').doc(mypseudo).set({
+            db.collection('users').add({
+              pseudo: mypseudo,
               email: currentUser.email,
               avatar: myavatar
             })
@@ -153,6 +154,30 @@ export default {
     }
   },
   async created () {
+    const currentUser = firebase.auth().currentUser
+
+    if (currentUser) {
+      var db = firebase.firestore()
+      console.log('email = ' + currentUser.email)
+      var docRef = db.collection('users').where('email', '==', currentUser.email)
+
+      docRef.get().then((snapshot) => {
+        if (!snapshot.empty) {
+          console.log(snapshot.docs[0].data())
+          // L'utilisateur à déjà son pseudo d'inscrit dans la bdd
+          this.$store.commit('SET_PSEUDO', snapshot.docs[0].data().pseudo)
+          this.$store.commit('SET_AVATAR', snapshot.docs[0].data().avatar)
+          this.$router.replace('game')
+        } else {
+          console.log('doc not exist')
+        }
+      }).catch(function (error) {
+        console.log('Error getting document:', error)
+        alert('errors append ....')
+      })
+    } else {
+      console.log('not connected')
+    }
     console.log(this.$store)
   },
   computed: {

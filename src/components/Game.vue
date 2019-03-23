@@ -88,18 +88,24 @@ export default {
       const router = this.$router
 
       if (currentUser) {
-        db.collection('highscore').add({
-          score: this.$store.state.score,
-          pseudo: this.$store.state.pseudo
+        db.collection('users').where('pseudo', '==', this.$store.state.pseudo).get().then((doc) => {
+          console.log('pseudo = ' + this.$store.state.pseudo)
+          console.log('Size = ' + doc.docs.length)
+          console.log(doc.docs)
+          console.log(doc.docs[0])
+          db.collection('highscore').add({
+            score: this.$store.state.score,
+            idUser: doc.docs[0].id
+          })
+            .then(function () {
+              console.log('Document successfully written!')
+              router.push({ name: 'game' })
+            })
+            .catch(function (error) {
+              console.error('Error writing document: ', error)
+              alert('Oops. ' + error.message)
+            })
         })
-          .then(function () {
-            console.log('Document successfully written!')
-            router.push({ name: 'game' })
-          })
-          .catch(function (error) {
-            console.error('Error writing document: ', error)
-            alert('Oops. ' + error.message)
-          })
       }
     },
     async validate () {

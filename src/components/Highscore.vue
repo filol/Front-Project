@@ -43,27 +43,23 @@ export default {
       const scores = []
       db.collection('highscore').orderBy('score', 'desc').get().then((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
-          var pseudo = doc.data().pseudo
           var score = doc.data().score
-
-          if (pseudo) {
-            var docRef = db.collection('users').doc(pseudo)
-            docRef.get().then(function (doc) {
-              // doc.data() is never undefined for query doc snapshots
-              if (doc.exists) {
-                scores.push({
-                  avatar: doc.data().avatar,
-                  pseudo: pseudo,
-                  score: score
-                })
-              } else {
-                scores.push({
-                  pseudo: pseudo,
-                  score: score
-                })
-              }
-            })
-          }
+          var docRef = db.collection('users').doc(doc.data().idUser)
+          docRef.get().then(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            if (doc.exists) {
+              scores.push({
+                avatar: doc.data().avatar,
+                pseudo: doc.data().pseudo,
+                score: score
+              })
+            } else {
+              scores.push({
+                pseudo: 'Anonymous',
+                score: score
+              })
+            }
+          })
         })
         this.scores = scores
       })

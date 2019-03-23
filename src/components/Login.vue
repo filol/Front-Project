@@ -29,21 +29,20 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
         (user) => {
           var db = firebase.firestore()
-          var docRef = db.collection('users').where('email', '==', this.email)
-
-          docRef.get().then(function (doc) {
-            if (doc.exists) {
-              // L'utilisateur à déjà son pseudo d'inscrit dans la bdd
-              this.$store.commit('SET_PSEUDO', doc.docs[0].id)
-              this.$store.commit('SET_AVATAR', doc.docs[0].data().avatar)
-              router.replace('game')
-            } else {
-              router.replace('startgame')
-            }
-          }).catch(function (error) {
-            console.log('Error getting document:', error)
-            alert('errors append ....')
-          })
+          db.collection('users').where('email', '==', this.email).get()
+            .then((snapshot) => {
+              if (!snapshot.empty) {
+                // L'utilisateur à déjà son pseudo d'inscrit dans la bdd
+                this.$store.commit('SET_PSEUDO', snapshot.docs[0].data().pseudo)
+                this.$store.commit('SET_AVATAR', snapshot.docs[0].data().avatar)
+                router.replace('game')
+              } else {
+                router.replace('startgame')
+              }
+            }).catch(function (error) {
+              console.log('Error getting document:', error)
+              alert('errors append ....')
+            })
           router.replace('startgame')
         },
         (err) => {
