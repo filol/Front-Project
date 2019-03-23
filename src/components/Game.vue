@@ -3,13 +3,8 @@
     <v-container>
       <v-layout row class="display-1" text-xs-center wrap>
         <Player/>
-        <v-flex
-          class="gameContainer"
-          order-sm2
-          order-xs1
-          justify-center
-          md9
-        > Guess the key word of the image ( {{ word.length }} letters ) :
+        <v-flex class="gameContainer" order-sm2 order-xs1 justify-center md9>
+          Guess the key word of the image ( {{ word.length }} letters ) :
           <v-layout row class="display-1 gameImage" text-md-center>
             <v-flex xs8 offset-xs2>
               <v-layout column>
@@ -24,19 +19,15 @@
             </v-flex>
           </v-layout>
           <v-alert
-                  :value="true"
-                  type="success"
-                  v-if="hasWin"
-          >
-            Congratulation ! You find the word {{ previousWord }}
-          </v-alert>
+            :value="true"
+            type="success"
+            v-if="hasWin"
+          >Congratulation ! You find the word {{ previousWord }}</v-alert>
           <v-alert
-                  :value="true"
-                  type="error"
-                  v-if="hasLose"
-          >
-            You Lose ! You didn't find the word {{ previousWord }} in 10 attempt
-          </v-alert>
+            :value="true"
+            type="error"
+            v-if="hasLose"
+          >You Lose ! You didn't find the word {{ previousWord }} in 10 attempt</v-alert>
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs8 offset-xs2>
               <v-btn color="#b99458" large @click="validate">Validate</v-btn>
@@ -53,6 +44,7 @@
 <script>
 import Player from './Player'
 import dictionary from '../assets/dictionary'
+import firebase from 'firebase'
 
 export default {
   data: () => {
@@ -88,7 +80,27 @@ export default {
       }
     },
     sleep (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    async addScoreToDatabase () {
+      const currentUser = firebase.auth().currentUser
+      var db = firebase.firestore()
+      const router = this.$router
+
+      if (currentUser) {
+        db.collection('highscore').add({
+          score: this.$store.state.score,
+          pseudo: this.$store.state.pseudo
+        })
+          .then(function () {
+            console.log('Document successfully written!')
+            router.push({ name: 'game' })
+          })
+          .catch(function (error) {
+            console.error('Error writing document: ', error)
+            alert('Oops. ' + error.message)
+          })
+      }
     },
     async validate () {
       console.log('validation')
@@ -106,6 +118,7 @@ export default {
           this.previousWord = this.word
           this.setWord()
           this.hasLose = true
+          this.addScoreToDatabase()
           await this.sleep(2000)
           this.hasLose = false
         } else this.image = this.images[this.numImg].src.landscape
