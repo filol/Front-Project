@@ -4,7 +4,11 @@
       <v-card>
         <v-list subheader>
           <v-subheader>HighScore</v-subheader>
-          <v-list-tile v-for="item in scores" :key="item.pseudo" avatar>
+          <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>#{{index}}</v-list-tile-title>
+            </v-list-tile-content>
+
             <v-list-tile-avatar>
               <img :src="item.avatar">
             </v-list-tile-avatar>
@@ -41,7 +45,7 @@ export default {
     async getHighScore () {
       var db = firebase.firestore()
       const scores = []
-      db.collection('highscore').orderBy('score', 'desc').get().then((querySnapshot) => {
+      db.collection('highscore').get().then((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
           var score = doc.data().score
           var docRef = db.collection('users').doc(doc.data().idUser)
@@ -59,6 +63,9 @@ export default {
                 score: score
               })
             }
+            scores.sort((a, b) =>
+              b.score - a.score
+            )
           })
         })
         this.scores = scores
