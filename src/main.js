@@ -7,6 +7,7 @@ import Game from './components/Game'
 import Home from './components/Home'
 import About from './components/About'
 import SignUp from './components/SignUp'
+import SignOut from './components/SignOut'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import Vuex from 'vuex'
@@ -39,6 +40,7 @@ const routes = [
   { path: '/about', component: About },
   { path: '/signup', component: SignUp },
   { path: '/login', component: Login },
+  { path: '/signout', component: SignOut },
   { path: '/highscore', component: Highscore }
 ]
 

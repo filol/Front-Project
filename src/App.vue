@@ -11,7 +11,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidebuttons">
         <v-btn
-          v-for="item in getMenu"
+          v-for="item in menu"
           :key="item.title"
           :to="item.link"
           class="white--text"
@@ -21,7 +21,7 @@
       <v-menu class="hidemenu">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
         <v-list>
-          <v-list-tile v-for="item in getMenu" :key="item.title">
+          <v-list-tile v-for="item in menu" :key="item.title">
             <v-list-tile-content :to="item.link">
               <v-btn :to="item.link" flat>{{ item.title }}</v-btn>
             </v-list-tile-content>
@@ -44,24 +44,34 @@ export default {
   components: {},
   data () {
     return {
+      menu:
+        [
+          { title: 'Home', link: '/' },
+          { title: 'Game', link: '/startgame' },
+          { title: 'Highscore', link: '/highscore' },
+          { title: 'About', link: '/about' },
+          { title: 'Login', link: '/login' },
+          { title: 'SignUp', link: '/signup' }
+        ],
+      userConnected: false
     }
   },
-  computed: {
-    getMenu () {
+  methods: {
+    updateMenu () {
       var currentUser = firebase.auth().currentUser
-      var menu
       if (currentUser) {
-        menu =
+        this.userConnected = true
+        this.menu =
           [
             { title: 'Home', link: '/' },
             { title: 'Game', link: '/startgame' },
             { title: 'Highscore', link: '/highscore' },
             { title: 'About', link: '/about' },
             { title: 'SignOut', link: '/signout' }
-
           ]
       } else {
-        menu =
+        this.userConnected = false
+        this.menu =
           [
             { title: 'Home', link: '/' },
             { title: 'Game', link: '/startgame' },
@@ -71,8 +81,10 @@ export default {
             { title: 'SignUp', link: '/signup' }
           ]
       }
-      return menu
     }
+  },
+  created () {
+    firebase.auth().onAuthStateChanged(this.updateMenu)
   }
 }
 </script>
