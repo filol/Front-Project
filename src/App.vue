@@ -18,6 +18,18 @@
           flat
         >{{ item.title }}</v-btn>
       </v-toolbar-items>
+
+      <v-toolbar-items v-if="userConnected">
+        <v-flex class="justify-center text-xs-center">
+          <span class="white--text" v-if="hasPseudo">{{pseudo}}</span>
+          <span class="white--text" v-else>{{email}}</span>
+        </v-flex>
+        <v-flex>
+          <v-avatar :size="50">
+            <img :src="avatar" alt>
+          </v-avatar>
+        </v-flex>
+      </v-toolbar-items>
       <v-menu class="hidemenu">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
         <v-list>
@@ -53,7 +65,11 @@ export default {
           { title: 'Login', link: '/login' },
           { title: 'SignUp', link: '/signup' }
         ],
-      userConnected: false
+      userConnected: false,
+      pseudo: '',
+      avatar: '',
+      email: '',
+      hasPseudo: false
     }
   },
   methods: {
@@ -61,6 +77,31 @@ export default {
       var currentUser = firebase.auth().currentUser
       if (currentUser) {
         this.userConnected = true
+        this.email = currentUser.email
+        if (this.$store.state.pseudo !== '') {
+          this.hasPseudo = true
+          this.pseudo = this.$store.state.pseudo
+          this.avatar = this.$store.state.avatar
+        } else {
+          this.hasPseudo = false
+
+          // We check if it exist in db
+          var db = firebase.firestore()
+          db.collection('users').where('email', '==', this.email).get()
+            .then((snapshot) => {
+              if (!snapshot.empty) {
+                // L'utilisateur à déjà son pseudo d'inscrit dans la bdd
+                this.$store.commit('SET_PSEUDO', snapshot.docs[0].data().pseudo)
+                this.$store.commit('SET_AVATAR', snapshot.docs[0].data().avatar)
+                this.hasPseudo = true
+                this.pseudo = this.$store.state.pseudo
+                this.avatar = this.$store.state.avatar
+              } else {
+              }
+            }).catch(function (error) {
+              console.log('Error getting document:', error)
+            })
+        }
         this.menu =
           [
             { title: 'Home', link: '/' },
@@ -71,6 +112,9 @@ export default {
           ]
       } else {
         this.userConnected = false
+        this.email = ''
+        this.pseudo = ''
+        this.avatar = ''
         this.menu =
           [
             { title: 'Home', link: '/' },
@@ -94,12 +138,12 @@ export default {
   color: #ffffff;
   text-decoration: none;
 }
-@media (min-width: 650px) {
+@media (min-width: 900px) {
   .hidemenu {
     display: none;
   }
 }
-@media (max-width: 651px) {
+@media (max-width: 901px) {
   .hidebuttons {
     display: none;
   }
