@@ -60,10 +60,27 @@
         </v-flex>
       </v-layout>
     </v-layout>
-    <v-layout row justify-space-around>
-      <v-card class="ma-5">Card 1</v-card>
-      <v-card class="ma-5">Card 2</v-card>
-      <v-card class="ma-5">Card 3</v-card>
+    <v-layout row wrap justify-space-around>
+      <v-flex xs4 transition="scale-transition">
+        <v-card class="ma-5" height="65%">
+          <v-card-text class="title-card-stats productsansboldfont primary--text">1250</v-card-text>
+          <v-card-text>images affichées</v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs4 transition="scale-transition">
+        <v-card class="ma-5" height="65%">
+          <v-card-text class="title-card-stats productsansboldfont primary--text">7,3</v-card-text>
+          <v-card-text>images en moyennes avant de trouver la bonne réponse</v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs4>
+        <v-card class="ma-5" height="65%">
+          <v-card-text class="title-card-stats productsansboldfont primary--text">28%</v-card-text>
+          <v-card-text>de chance de trouver du premier coups</v-card-text>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-layout>
 </template>
@@ -135,5 +152,9 @@ export default {
 
 .titlerules {
   font-size: 2.5em;
+}
+
+.title-card-stats {
+  font-size: 4em;
 }
 </style>
