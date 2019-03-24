@@ -1,16 +1,47 @@
 <template>
-  <div class="login">
-    <h3>Sign In</h3>
-    <input type="text" v-model="email" placeholder="Email">
-    <br>
-    <input type="password" v-model="password" placeholder="Password">
-    <br>
-    <button @click="login">Connection</button>
-    <p>
-      You don't have an account ? You can
-      <router-link to="/signup">create one</router-link>
-    </p>
-  </div>
+  <v-layout fill-height class="mybackground">
+    <v-container>
+      <v-layout row wrap align-center>
+        <v-flex xs12 sm8 offset-sm2 align-center justify-center>
+          <v-card class="elevation-12">
+            <v-toolbar dark color="primary">
+              <v-toolbar-title>Sign In</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-container>
+                <form>
+                  <v-layout row>
+                    <v-flex xs12>
+                      <v-text-field v-model="email" name="emailid" placeholder="Email"></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs12>
+                      <v-text-field
+                        type="password"
+                        name="password"
+                        v-model="password"
+                        placeholder="Password"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row xs12 justify-center>
+                    <v-flex justify-center>
+                      <v-btn flat block color="primary" @click="login">Sign In</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </form>
+                <p>
+                  You don't have an account ? You can
+                  <router-link to="/signup">create one</router-link>
+                </p>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-layout>
 </template>
 
 <script>
@@ -76,5 +107,8 @@ p {
 p a {
   text-decoration: underline;
   cursor: pointer;
+}
+.mybackground {
+  background-color: var(--v-background-base);
 }
 </style>
