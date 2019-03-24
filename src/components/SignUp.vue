@@ -32,6 +32,61 @@
   </div>
 </template>
 
+<template>
+  <v-layout fill-height class="mybackground">
+    <v-container>
+      <v-layout row wrap align-center>
+        <v-flex xs12 sm8 offset-sm2 align-center justify-center>
+          <v-card class="elevation-12">
+            <v-toolbar dark color="primary">
+              <v-toolbar-title>Let's create a new account !</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-container>
+                <form>
+                  <v-layout row>
+                    <v-flex xs12>
+                      <v-text-field v-model="email" name="emailid" placeholder="Email"></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs12>
+                      <v-text-field
+                        type="password"
+                        name="password"
+                        v-model="password"
+                        placeholder="Password"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs12>
+                      <v-text-field
+                        type="password"
+                        name="password"
+                        v-model="passwordCheck"
+                        placeholder="Retype your password"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                </form>
+                <v-alert :value="true" type="error" v-if="hasError">Error : {{ errorMsg }}</v-alert>
+                <v-card-actions class="justify-center">
+                  <v-btn flat color="primary" @click="signUp">Sign Up</v-btn>
+                </v-card-actions>
+                <p>
+                  Already have an account ?
+                  <router-link to="/login">Login</router-link>
+                </p>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-layout>
+</template>
+
 <script>
 import firebase from 'firebase'
 
@@ -40,17 +95,26 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      passwordCheck: '',
+      hasError: false,
+      errorMsg: ''
     }
   },
   methods: {
     signUp: function () {
+      if (this.password !== this.passwordCheck) {
+        this.errorMsg = 'passwords do not match'
+        this.hasError = true
+        return
+      }
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        function (user) {
+        (user) => {
           this.$router.replace('startgame')
         },
-        function (err) {
-          alert('Oops. ' + err.message)
+        (err) => {
+          this.errorMsg = err.message
+          this.hasError = true
         }
       )
     }
