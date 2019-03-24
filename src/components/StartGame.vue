@@ -42,7 +42,7 @@
         </v-flex>
 
         <div class="text-xs-center">
-          <v-btn class="white--text" color="green" @click="start">Start !</v-btn>
+          <v-btn class="white--text" color="primary" @click="start">Start !</v-btn>
         </div>
       </v-layout>
     </v-container>
