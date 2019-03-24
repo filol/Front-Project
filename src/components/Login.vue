@@ -26,6 +26,7 @@
                     </v-flex>
                   </v-layout>
                 </form>
+                <v-alert :value="true" type="error" v-if="hasError">Error : {{ errorMsg }}</v-alert>
                 <v-card-actions class="justify-center">
                   <v-btn flat color="primary" @click="login">Sign In</v-btn>
                 </v-card-actions>
@@ -49,11 +50,14 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      hasError: false,
+      errorMsg: ''
     }
   },
   methods: {
     login: function () {
+      this.hasError = false
       const router = this.$router
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
         (user) => {
@@ -70,12 +74,14 @@ export default {
               }
             }).catch(function (error) {
               console.log('Error getting document:', error)
-              alert('errors append ....')
+              this.errorMsg = 'Oops, mistakes, it happens...'
+              this.hasError = true
             })
           router.replace('startgame')
         },
         (err) => {
-          alert('Oops. ' + err.message)
+          this.errorMsg = err.message
+          this.hasError = true
         }
       )
     }
