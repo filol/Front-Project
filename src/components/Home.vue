@@ -4,25 +4,30 @@
       <v-flex class="ma-5">
         <v-layout row class="display-1" text-md-center>
           <v-flex xs12 sm12>
-            <v-card color="grey darken-1">
-              <v-card-title>Top 10</v-card-title>
+            <v-card color="primary">
+              <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
               <v-list>
                 <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
-                  <v-list-tile-content>
-                    <v-list-tile-title>#{{index+1}}</v-list-tile-title>
-                  </v-list-tile-content>
-
-                  <v-list-tile-avatar>
-                    <img :src="item.avatar">
-                  </v-list-tile-avatar>
-
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
-                  </v-list-tile-content>
-
-                  <v-list-tile-action>
-                    <v-list-tile-title v-html="item.score"></v-list-tile-title>
-                  </v-list-tile-action>
+                  <v-flex shrink>
+                    <v-list-tile-content>
+                      <v-list-tile-title>#{{index+1}}</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-flex>
+                  <v-flex shrink>
+                    <v-list-tile-avatar>
+                      <img :src="item.avatar">
+                    </v-list-tile-avatar>
+                  </v-flex>
+                  <v-flex shrink>
+                    <v-list-tile-content>
+                      <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-flex>
+                  <v-flex grow>
+                    <v-list-tile-action class="text-xs-right">
+                      <v-list-tile-title class="text-xs-right" v-html="item.score+'pts'"></v-list-tile-title>
+                    </v-list-tile-action>
+                  </v-flex>
                 </v-list-tile>
               </v-list>
             </v-card>
@@ -32,18 +37,26 @@
 
       <v-layout column>
         <v-card class="ma-5">
-          <v-card-title>The rules</v-card-title>
+          <v-card-title
+            class="justify-center productsansboldfont titlerules primary--text"
+          >The rules</v-card-title>
           <v-card-text>
-            <p>On va vous présenter une photo, votre but est de trouver le mot associé à cette photos</p>
+            <p
+              class="text-xs-left"
+            >On va vous présenter une photo, votre but est de trouver le mot associé à cette photos.</p>
             <br>
-            <p>- Si vous échouez, on va vous remettre une autre photos avec le même mots clé, vous avez le droit à 10 essais mais attention à chaque faux essaie vous perdez 10 points</p>
+            <p
+              class="text-xs-left"
+            >- Si vous échouez, on va vous remettre une autre photos avec le même mots clé, vous avez le droit à 10 essais mais attention à chaque faux essaie vous perdez 10 points</p>
+            <p class="text-xs-left">- Si vous réussiser, bravo, vous gagnez 50 pts</p>
             <br>
-            <p>- Si vous réussiser, bravo vous gagnez 50 pts</p>
-            <br>
+            <p
+              class="text-xs-left"
+            >Vous voulez apparaitre dans le TOP 10 ? N'oubliez pas de vous connecter d'abords pour que votre score soit enregistré</p>
           </v-card-text>
         </v-card>
         <v-flex>
-          <v-btn to="/startgame" large color="success">Start the game !</v-btn>
+          <v-btn to="/startgame" large color="primary">Start the game !</v-btn>
         </v-flex>
       </v-layout>
     </v-layout>
@@ -119,8 +132,8 @@ export default {
   position: absolute;
   pointer-events: none;
 }
-a,
-button {
-  pointer-events: all;
+
+.titlerules {
+  font-size: 2.5em;
 }
 </style>

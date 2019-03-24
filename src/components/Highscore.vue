@@ -13,7 +13,7 @@
               <img :src="item.avatar">
             </v-list-tile-avatar>
 
-            <v-list-tile-content>
+            <v-list-tile-content class="ml-3">
               <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
             </v-list-tile-content>
 

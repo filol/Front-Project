@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-toolbar app class="elevation-0 boxhead" color="background">
+    <v-toolbar app class="elevation-0 boxhead productsansfont" color="background">
       <router-link to="/">
         <v-toolbar-title class="headline text-uppercase">
-          <span class="white--text">RECOGNIZE</span>
-          <span class="font-weight-light white--text">MY CAT</span>
+          <span class="white--text productsansboldfont">RECOGNIZE</span>
+          <span class="font-weight-light white--text productsansfont">MY CAT</span>
         </v-toolbar-title>
       </router-link>
 
@@ -20,9 +20,9 @@
       </v-toolbar-items>
 
       <v-toolbar-items v-if="userConnected">
-        <v-flex class="justify-center text-xs-center">
-          <span class="white--text" v-if="hasPseudo">{{pseudo}}</span>
-          <span class="white--text" v-else>{{email}}</span>
+        <v-flex fill-height>
+          <span class="white--text mr-3 aligner-name" v-if="hasPseudo">{{pseudo}}</span>
+          <span class="white--text mr-3 aligner-name" v-else>{{email}}</span>
         </v-flex>
         <v-flex>
           <v-avatar :size="50">
@@ -134,6 +134,27 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "productsans";
+  src: url("./assets/fonts/ProductSansRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "productsansbold";
+  src: url("./assets/fonts/ProductSansBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.productsansfont {
+  font-family: "productsans";
+}
+.productsansboldfont {
+  font-family: "productsansbold";
+}
+
 .boxhead a {
   color: #ffffff;
   text-decoration: none;
@@ -165,5 +186,13 @@ export default {
 }
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.aligner-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 </style>
