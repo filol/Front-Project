@@ -6,7 +6,7 @@
           <v-subheader>HighScore</v-subheader>
           <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
             <v-list-tile-content>
-              <v-list-tile-title>#{{index}}</v-list-tile-title>
+              <v-list-tile-title>#{{index+1}}</v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-avatar>
