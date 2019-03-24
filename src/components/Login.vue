@@ -25,12 +25,10 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout row xs12 justify-center>
-                    <v-flex justify-center>
-                      <v-btn flat block color="primary" @click="login">Sign In</v-btn>
-                    </v-flex>
-                  </v-layout>
                 </form>
+                <v-card-actions class="justify-center">
+                  <v-btn flat color="primary" @click="login">Sign In</v-btn>
+                </v-card-actions>
                 <p>
                   You don't have an account ? You can
                   <router-link to="/signup">create one</router-link>
