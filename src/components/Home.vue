@@ -1,7 +1,7 @@
 <template>
   <v-layout column class="mybackground" fill-height>
     <v-layout row>
-      <v-flex>
+      <v-flex class="ma-5">
         <v-layout row class="display-1" text-md-center>
           <v-flex xs12 sm12>
             <v-card color="grey darken-1">
@@ -31,16 +31,26 @@
       </v-flex>
 
       <v-layout column>
-        <span>Rules here</span>
+        <v-card class="ma-5">
+          <v-card-title>The rules</v-card-title>
+          <v-card-text>
+            <p>On va vous présenter une photo, votre but est de trouver le mot associé à cette photos</p>
+            <br>
+            <p>- Si vous échouez, on va vous remettre une autre photos avec le même mots clé, vous avez le droit à 10 essais mais attention à chaque faux essaie vous perdez 10 points</p>
+            <br>
+            <p>- Si vous réussiser, bravo vous gagnez 50 pts</p>
+            <br>
+          </v-card-text>
+        </v-card>
         <v-flex>
           <v-btn to="/startgame" large color="success">Start the game !</v-btn>
         </v-flex>
       </v-layout>
     </v-layout>
-    <v-layout row>
-      <v-card>Card 1</v-card>
-      <v-card>Card 2</v-card>
-      <v-card>Card 3</v-card>
+    <v-layout row justify-space-around>
+      <v-card class="ma-5">Card 1</v-card>
+      <v-card class="ma-5">Card 2</v-card>
+      <v-card class="ma-5">Card 3</v-card>
     </v-layout>
   </v-layout>
 </template>
