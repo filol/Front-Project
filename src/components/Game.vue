@@ -123,6 +123,8 @@ export default {
         this.$ga.event({
           eventCategory: 'game',
           eventAction: 'findIn',
+          eventLabel: 'findIn',
+
           eventValue: this.numImg
         })
       } else {
@@ -138,6 +140,8 @@ export default {
           this.$ga.event({
             eventCategory: 'game',
             eventAction: 'neverFind',
+            eventLabel: 'neverFind',
+
             eventValue: 1
           })
           this.previousWord = this.word
