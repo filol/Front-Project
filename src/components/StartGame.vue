@@ -108,30 +108,33 @@ export default {
       this.$store.commit('SET_PSEUDO', pseudo.target.value)
     },
     start () {
-      console.log('this.pseudo=' + this.pseudo)
       const router = this.$router
       const mypseudo = this.pseudo
       const myavatar = this.items[this.selectedAvatar].src
       const currentUser = firebase.auth().currentUser
       var db = firebase.firestore()
-      var docRef = db.collection('users').where('pseudo', '==', this.pseudo)
+      var docRef = db.collection('users').where('pseudoInsensitve', '==', this.pseudo.toUpperCase())
 
-      docRef.get().then(function (doc) {
-        if (doc.exists) {
+      if (this.pseudo.length > 15) {
+        alert('La taille maximun d\'un pseudo est de 15 caractère, déso, pas déso')
+        return
+      }
+
+      docRef.get().then((snapshot) => {
+        if (!snapshot.empty) {
           if (currentUser) {
-            if (doc.data().email === currentUser.email) {
-              alert('C\'est déjà ton pseudo')
-            } else {
-              alert('impossible se pseudo appartient à quelqu\'un')
+            if (!snapshot.docs[0].data().email === currentUser.email) {
+              alert('Impossible se pseudo appartient à quelqu\'un')
             }
           } else {
-            alert('impossible se pseudo appartient à quelqu\'un')
+            alert('Impossible se pseudo appartient à quelqu\'un')
           }
         } else {
           if (currentUser) {
             // add pseudo to databse
             db.collection('users').add({
               pseudo: mypseudo,
+              pseudoInsensitve: mypseudo.toUpperCase(),
               email: currentUser.email,
               avatar: myavatar
             })

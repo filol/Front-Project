@@ -13,6 +13,7 @@ import VueAxios from 'vue-axios'
 // import Vuex from 'vuex'
 import UserStore from './stores/UserStore'
 import firebase from 'firebase'
+import VueAnalytics from 'vue-analytics'
 import Highscore from './components/Highscore'
 
 import VueRouter from 'vue-router'
@@ -54,6 +55,11 @@ const router = new VueRouter({ routes })
 //   else if (!requiresAuth && currentUser) next('')
 //   else next()
 // })
+
+Vue.use(VueAnalytics, {
+  id: 'UA-136864524-1',
+  router
+})
 
 new Vue({
   router,

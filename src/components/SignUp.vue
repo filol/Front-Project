@@ -70,7 +70,12 @@
                     </v-flex>
                   </v-layout>
                 </form>
-                <v-alert :value="true" type="error" v-if="hasError">Error : {{ errorMsg }}</v-alert>
+                <v-alert
+                  transition="scale-transition"
+                  :value="true"
+                  type="error"
+                  v-if="hasError"
+                >Error : {{ errorMsg }}</v-alert>
                 <v-card-actions class="justify-center">
                   <v-btn flat color="primary" @click="signUp">Sign Up</v-btn>
                 </v-card-actions>

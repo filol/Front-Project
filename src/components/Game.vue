@@ -106,6 +106,7 @@ export default {
     },
     async validate () {
       console.log('validation')
+
       if (this.playerWordInput === this.word) {
         this.previousWord = this.word
         this.setWord()
@@ -113,10 +114,32 @@ export default {
         this.hasWin = true
         await this.sleep(2000)
         this.hasWin = false
+        this.$ga.event({
+          eventCategory: 'game',
+          eventAction: 'validate',
+          eventLabel: 'goodAnswer',
+          eventValue: 1
+        })
+        this.$ga.event({
+          eventCategory: 'game',
+          eventAction: 'findIn',
+          eventValue: this.numImg
+        })
       } else {
         this.$store.commit('DECREASE_SCORE', 10)
         this.numImg++
+        this.$ga.event({
+          eventCategory: 'game',
+          eventAction: 'validate',
+          eventLabel: 'falseAnswer',
+          eventValue: 1
+        })
         if (this.numImg === 10) {
+          this.$ga.event({
+            eventCategory: 'game',
+            eventAction: 'neverFind',
+            eventValue: 1
+          })
           this.previousWord = this.word
           this.setWord()
           this.hasLose = true

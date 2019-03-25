@@ -26,7 +26,12 @@
                     </v-flex>
                   </v-layout>
                 </form>
-                <v-alert :value="true" type="error" v-if="hasError">Error : {{ errorMsg }}</v-alert>
+                <v-alert
+                  transition="scale-transition"
+                  :value="true"
+                  type="error"
+                  v-if="hasError"
+                >Error : {{ errorMsg }}</v-alert>
                 <v-card-actions class="justify-center">
                   <v-btn flat color="primary" @click="login">Sign In</v-btn>
                 </v-card-actions>
@@ -102,14 +107,6 @@ input {
 button {
   margin-top: 20px;
   width: 10%;
-  cursor: pointer;
-}
-p {
-  margin-top: 40px;
-  font-size: 13px;
-}
-p a {
-  text-decoration: underline;
   cursor: pointer;
 }
 .mybackground {
