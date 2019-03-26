@@ -108,6 +108,12 @@ export default {
       console.log('validation')
 
       if (this.playerWordInput === this.word) {
+        this.$ga.event({
+          eventCategory: 'game',
+          eventAction: 'findIn',
+          eventLabel: 'findIn',
+          eventValue: this.numImg.valueOf()
+        })
         this.previousWord = this.word
         this.setWord()
         this.$store.commit('INCREASE_SCORE', 50)
@@ -119,13 +125,6 @@ export default {
           eventAction: 'validate',
           eventLabel: 'goodAnswer',
           eventValue: 1
-        })
-        this.$ga.event({
-          eventCategory: 'game',
-          eventAction: 'findIn',
-          eventLabel: 'findIn',
-
-          eventValue: this.numImg
         })
       } else {
         this.$store.commit('DECREASE_SCORE', 10)
@@ -141,7 +140,6 @@ export default {
             eventCategory: 'game',
             eventAction: 'neverFind',
             eventLabel: 'neverFind',
-
             eventValue: 1
           })
           this.previousWord = this.word

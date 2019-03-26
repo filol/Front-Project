@@ -65,7 +65,7 @@
         <v-slide-y-transition>
           <v-card class="ma-5" height="65%">
             <v-card-text class="title-card-stats productsansboldfont primary--text">
-              <animated-number :value="1250" round="1" :duration="5000"/>
+              <animated-number :value="imageDiplayed" round="1" :duration="5000"/>
             </v-card-text>
             <v-card-text>images affichées</v-card-text>
           </v-card>
@@ -76,9 +76,9 @@
         <v-slide-y-transition>
           <v-card class="ma-5" height="65%">
             <v-card-text class="title-card-stats productsansboldfont primary--text">
-              <animated-number :value="7.3" round="10" :duration="5000"/>
+              <animated-number :value="percentGoodAnswer" round="10" :duration="5000"/>%
             </v-card-text>
-            <v-card-text>images en moyennes avant de trouver la bonne réponse</v-card-text>
+            <v-card-text>de bonnes réponses</v-card-text>
           </v-card>
         </v-slide-y-transition>
       </v-flex>
@@ -86,9 +86,9 @@
       <v-flex xs4>
         <v-card class="ma-5" height="65%">
           <v-card-text class="title-card-stats productsansboldfont primary--text">
-            <animated-number :value="28" round="1" :duration="5000"/>%
+            <animated-number :value="moyFindIn" round="1" :duration="5000"/>
           </v-card-text>
-          <v-card-text>de chance de trouver du premier coups</v-card-text>
+          <v-card-text>nombre d'image en moyenne pour trouver le mot</v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -98,6 +98,7 @@
 <script>
 import firebase from 'firebase'
 import AnimatedNumber from 'animated-number-vue'
+import axios from 'axios'
 
 export default {
   data: () => {
@@ -105,7 +106,11 @@ export default {
       scores: [{
         pseudo: 'No scores',
         score: ''
-      }] }
+      }],
+      imageDiplayed: 1,
+      percentGoodAnswer: 1,
+      moyFindIn: 1
+    }
   },
   methods: {
     async getHighScore () {
@@ -143,10 +148,24 @@ export default {
           console.error('Error writing document: ', error)
           alert('Oops. ' + error.message)
         })
+    },
+    getStats () {
+      axios
+        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/images-display')
+        .then(response => (this.imageDiplayed = response.data))
+
+      axios
+        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/percent-good-answer')
+        .then(response => (this.percentGoodAnswer = response.data))
+
+      axios
+        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/average-find-it')
+        .then(response => (this.moyFindIn = response.data))
     }
   },
   created () {
     this.getHighScore()
+    this.getStats()
   },
   components: {
     AnimatedNumber
