@@ -7,7 +7,8 @@
             <v-card color="primary">
               <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
               <v-list>
-                <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
+                <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoadingTop"></v-progress-circular>
+                <v-list-tile v-else v-for="(item,index) in scores" :key="index" avatar>
                   <v-flex shrink>
                     <v-list-tile-content>
                       <v-list-tile-title>#{{index+1}}</v-list-tile-title>
@@ -65,7 +66,14 @@
         <v-slide-y-transition>
           <v-card class="ma-5" height="65%">
             <v-card-text class="title-card-stats productsansboldfont primary--text">
-              <animated-number :value="imageDiplayed" round="1" :duration="5000"/>
+              <v-progress-circular
+                indeterminate
+                size="64"
+                color="primary"
+                class="ma-5"
+                v-if="isLoadingStat1"
+              ></v-progress-circular>
+              <animated-number :value="imageDiplayed" round="1" :duration="5000" v-else/>
             </v-card-text>
             <v-card-text>images affichées</v-card-text>
           </v-card>
@@ -76,7 +84,14 @@
         <v-slide-y-transition>
           <v-card class="ma-5" height="65%">
             <v-card-text class="title-card-stats productsansboldfont primary--text">
-              <animated-number :value="percentGoodAnswer" round="10" :duration="5000"/>%
+              <v-progress-circular
+                indeterminate
+                size="32"
+                color="primary"
+                class="ma-5"
+                v-if="isLoadingStat2"
+              ></v-progress-circular>
+              <animated-number :value="percentGoodAnswer" round="10" :duration="5000" v-else/>%
             </v-card-text>
             <v-card-text>de bonnes réponses</v-card-text>
           </v-card>
@@ -86,7 +101,14 @@
       <v-flex xs4>
         <v-card class="ma-5" height="65%">
           <v-card-text class="title-card-stats productsansboldfont primary--text">
-            <animated-number :value="moyFindIn" round="1" :duration="5000"/>
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="primary"
+              class="ma-5"
+              v-if="isLoadingStat3"
+            ></v-progress-circular>
+            <animated-number :value="moyFindIn" round="1" :duration="5000" v-else/>
           </v-card-text>
           <v-card-text>nombre d'image en moyenne pour trouver le mot</v-card-text>
         </v-card>
@@ -111,7 +133,11 @@ export default {
       }],
       imageDiplayed: 1,
       percentGoodAnswer: 1,
-      moyFindIn: 1
+      moyFindIn: 1,
+      isLoadingTop: true,
+      isLoadingStat1: true,
+      isLoadingStat2: true,
+      isLoadingStat3: true
     }
   },
   methods: {
@@ -145,6 +171,7 @@ export default {
           })
         })
         this.scores = scores
+        this.isLoadingTop = false
       })
         .catch(function (error) {
           console.error('Error writing document: ', error)
@@ -154,15 +181,24 @@ export default {
     getStats () {
       axios
         .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/images-display')
-        .then(response => (this.imageDiplayed = response.data))
+        .then(response => {
+          this.imageDiplayed = response.data
+          this.isLoadingStat1 = false
+        })
 
       axios
         .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/percent-good-answer')
-        .then(response => (this.percentGoodAnswer = response.data))
+        .then(response => {
+          this.percentGoodAnswer = response.data
+          this.isLoadingStat2 = false
+        })
 
       axios
         .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/average-find-it')
-        .then(response => (this.moyFindIn = response.data))
+        .then(response => {
+          this.moyFindIn = response.data
+          this.isLoadingStat3 = false
+        })
     }
   },
   created () {

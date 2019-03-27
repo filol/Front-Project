@@ -7,7 +7,10 @@
           Guess the key word of the image ( {{ word.length }} letters ) :
           <v-layout row class="display-1 gameImage" text-md-center>
             <v-flex xs8 offset-xs2>
-              <v-layout column>
+              <v-layout column align-center v-if="isLoading">
+                <v-progress-circular indeterminate color="primary" class="ma-5"></v-progress-circular>
+              </v-layout>
+              <v-layout column v-else>
                 <v-img max-height="800px" v-bind:src="image" aspect-ratio="1.7"></v-img>
               </v-layout>
             </v-flex>
@@ -57,7 +60,8 @@ export default {
       numImg: 0,
       previousWord: '',
       hasWin: false,
-      hasLose: false
+      hasLose: false,
+      isLoading: true
     }
   },
   mounted () {
@@ -67,12 +71,15 @@ export default {
     async setWord () {
       let numWord = parseInt(Math.random() * dictionary.length)
       this.word = dictionary[numWord]
+      this.isLoading = true
       const {
         data: { photos }
       } = await this.$http('https://api.pexels.com/v1/search', {
         params: { query: this.word, per_page: 10, page: 1 },
         headers: { Authorization: '563492ad6f9170000100000162a8ad9e59b34275992db6f903ddd7b9' }
       })
+      this.isLoading = false
+
       if (photos.length < 10) this.setWord()
       else {
         console.log(this.word)

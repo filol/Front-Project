@@ -1,8 +1,9 @@
 <template>
-  <v-layout row class="mybackground">
+  <v-layout fill-height row class="mybackground">
     <v-flex xs12 sm6 offset-sm3>
       <v-card class="my-5">
-        <v-list subheader>
+        <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoading"></v-progress-circular>
+        <v-list subheader v-else>
           <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
             <v-list-tile-content>
               <v-list-tile-title>#{{index+1}}</v-list-tile-title>
@@ -39,7 +40,8 @@ export default {
       scores: [{
         pseudo: 'No scores',
         score: ''
-      }]
+      }],
+      isLoading: true
     }
   },
   methods: {
@@ -70,6 +72,7 @@ export default {
           })
         })
         this.scores = scores
+        this.isLoading = false
       })
         .catch(function (error) {
           console.error('Error writing document: ', error)
