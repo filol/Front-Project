@@ -108,7 +108,7 @@
               class="ma-5"
               v-if="isLoadingStat3"
             ></v-progress-circular>
-            <animated-number :value="moyFindIn" round="1" :duration="5000" v-else/>
+            <animated-number :value="moyFindIn" round="10" :duration="5000" v-else/>
           </v-card-text>
           <v-card-text>nombre d'image en moyenne pour trouver le mot</v-card-text>
         </v-card>
