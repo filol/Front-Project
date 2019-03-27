@@ -40,7 +40,12 @@
             </v-flex>
           </v-carousel>
         </v-flex>
-
+        <v-alert
+          transition="scale-transition"
+          :value="true"
+          type="error"
+          v-if="hasError"
+        >Error : {{ errorMsg }}</v-alert>
         <div class="text-xs-center">
           <v-btn class="white--text" color="primary" @click="start">Start !</v-btn>
         </div>
@@ -59,6 +64,8 @@ export default {
     return {
       selectedAvatar: 1,
       pseudo: '',
+      hasError: false,
+      errorMsg: '',
       items: [
         {
           src: 'https://randomuser.me/api/portraits/lego/8.jpg'
@@ -118,7 +125,8 @@ export default {
       var docRef = db.collection('users').where('pseudoInsensitve', '==', this.pseudo.toUpperCase())
 
       if (this.pseudo.length > 15) {
-        alert('La taille maximun d\'un pseudo est de 15 caractère, déso, pas déso')
+        this.errorMsg = 'La taille maximun d\'un pseudo est de 15 caractère, déso, pas déso'
+        this.hasError = true
         return
       }
 
@@ -126,10 +134,12 @@ export default {
         if (!snapshot.empty) {
           if (currentUser) {
             if (!snapshot.docs[0].data().email === currentUser.email) {
-              alert('Impossible se pseudo appartient à quelqu\'un')
+              this.errorMsg = 'Impossible se pseudo appartient à quelqu\'un'
+              this.hasError = true
             }
           } else {
-            alert('Impossible se pseudo appartient à quelqu\'un')
+            this.errorMsg = 'Impossible se pseudo appartient à quelqu\'un'
+            this.hasError = true
           }
         } else {
           if (currentUser) {
@@ -146,7 +156,6 @@ export default {
               })
               .catch(function (error) {
                 console.error('Error writing document: ', error)
-                alert('Oops. ' + error.message)
               })
           } else {
             router.push({ name: 'game' })
@@ -154,7 +163,6 @@ export default {
         }
       }).catch(function (error) {
         console.log('Error getting document:', error)
-        alert('errors append ....')
       })
     }
   },
@@ -176,7 +184,6 @@ export default {
         }
       }).catch(function (error) {
         console.log('Error getting document:', error)
-        alert('errors append ....')
       })
     } else {
       console.log('not connected')

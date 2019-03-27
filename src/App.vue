@@ -100,7 +100,6 @@ export default {
                 this.hasPseudo = true
                 this.pseudo = this.$store.state.pseudo
                 this.avatar = this.$store.state.avatar
-              } else {
               }
             }).catch(function (error) {
               console.log('Error getting document:', error)

@@ -175,7 +175,6 @@ export default {
       })
         .catch(function (error) {
           console.error('Error writing document: ', error)
-          alert('Oops. ' + error.message)
         })
     },
     getStats () {
