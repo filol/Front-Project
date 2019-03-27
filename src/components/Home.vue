@@ -1,42 +1,38 @@
 <template>
   <v-layout column class="mybackground" fill-height>
     <v-layout row wrap>
+      <v-flex lg3 md4 sm12 xs12 order-md1 order-sm2 order-xs2>
+        <v-card class="ma-5" color="primary">
+          <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
+          <v-list>
+            <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoadingTop"></v-progress-circular>
+            <v-list-tile v-else v-for="(item,index) in scores" :key="index" avatar>
+              <v-flex shrink>
+                <v-list-tile-content>
+                  <v-list-tile-title>#{{index+1}}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-flex>
+              <v-flex shrink>
+                <v-list-tile-avatar>
+                  <img :src="item.avatar">
+                </v-list-tile-avatar>
+              </v-flex>
+              <v-flex shrink>
+                <v-list-tile-content>
+                  <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
+                </v-list-tile-content>
+              </v-flex>
+              <v-flex grow>
+                <v-list-tile-action class="text-xs-right">
+                  <v-list-tile-title class="text-xs-right" v-html="item.score+'pts'"></v-list-tile-title>
+                </v-list-tile-action>
+              </v-flex>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
 
-        <v-layout row class="display-1" text-md-center>
-          <v-flex xs12>
-            <v-card color="primary">
-              <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
-              <v-list>
-                <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoadingTop"></v-progress-circular>
-                <v-list-tile v-else v-for="(item,index) in scores" :key="index" avatar>
-                  <v-flex shrink>
-                    <v-list-tile-content>
-                      <v-list-tile-title>#{{index+1}}</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-flex>
-                  <v-flex shrink>
-                    <v-list-tile-avatar>
-                      <img :src="item.avatar">
-                    </v-list-tile-avatar>
-                  </v-flex>
-                  <v-flex shrink>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-flex>
-                  <v-flex grow>
-                    <v-list-tile-action class="text-xs-right">
-                      <v-list-tile-title class="text-xs-right" v-html="item.score+'pts'"></v-list-tile-title>
-                    </v-list-tile-action>
-                  </v-flex>
-                </v-list-tile>
-              </v-list>
-            </v-card>
-          </v-flex>
-        </v-layout>
-
-
-      <v-layout column>
+      <v-flex lg9 md8 sm12 xs12 order-md2 order-sm1 order-xs1>
         <v-card class="ma-5">
           <v-card-title
             class="justify-center productsansboldfont titlerules primary--text"
@@ -56,11 +52,11 @@
             >Vous voulez apparaitre dans le TOP 10 ? N'oubliez pas de vous connecter d'abords pour que votre score soit enregistré</p>
           </v-card-text>
         </v-card>
-        <v-flex>
-          <v-btn to="/startgame" large color="primary">Start the game !</v-btn>
-        </v-flex>
-      </v-layout>
+
+        <v-btn to="/startgame" large color="primary">Start the game !</v-btn>
+      </v-flex>
     </v-layout>
+
     <v-layout row wrap justify-space-around>
       <v-flex xs4>
         <v-slide-y-transition>
@@ -118,19 +114,21 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import AnimatedNumber from 'animated-number-vue'
-import axios from 'axios'
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import AnimatedNumber from "animated-number-vue";
+import axios from "axios";
 
 export default {
   data: () => {
     return {
-      scores: [{
-        pseudo: 'No scores',
-        score: ''
-      }],
+      scores: [
+        {
+          pseudo: "No scores",
+          score: ""
+        }
+      ],
       imageDiplayed: 1,
       percentGoodAnswer: 1,
       moyFindIn: 1,
@@ -138,77 +136,78 @@ export default {
       isLoadingStat1: true,
       isLoadingStat2: true,
       isLoadingStat3: true
-    }
+    };
   },
   methods: {
-    async getHighScore () {
-      var db = firebase.firestore()
-      var scores = []
-      db.collection('highscore').get().then((querySnapshot) => {
-        querySnapshot.forEach(function (doc) {
-          var score = doc.data().score
-          var docRef = db.collection('users').doc(doc.data().idUser)
-          docRef.get().then(function (doc) {
-            // doc.data() is never undefined for query doc snapshots
-            if (doc.exists) {
-              scores.push({
-                avatar: doc.data().avatar,
-                pseudo: doc.data().pseudo,
-                score: score
-              })
-            } else {
-              scores.push({
-                pseudo: 'Anonymous',
-                score: score
-              })
-            }
-            scores.sort((a, b) =>
-              b.score - a.score
-            )
-            if (scores.length > 9) {
-              scores = scores.slice(0, 9)
-            }
-          })
+    async getHighScore() {
+      var db = firebase.firestore();
+      var scores = [];
+      db.collection("highscore")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(function(doc) {
+            var score = doc.data().score;
+            var docRef = db.collection("users").doc(doc.data().idUser);
+            docRef.get().then(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              if (doc.exists) {
+                scores.push({
+                  avatar: doc.data().avatar,
+                  pseudo: doc.data().pseudo,
+                  score: score
+                });
+              } else {
+                scores.push({
+                  pseudo: "Anonymous",
+                  score: score
+                });
+              }
+              scores.sort((a, b) => b.score - a.score);
+              if (scores.length > 9) {
+                scores = scores.slice(0, 9);
+              }
+            });
+          });
+          this.scores = scores;
+          this.isLoadingTop = false;
         })
-        this.scores = scores
-        this.isLoadingTop = false
-      })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
     },
-    getStats () {
+    getStats() {
       axios
-        .get('https://www.api.front-end-project.dexemple.fr/ga/images-display')
+        .get("https://www.api.front-end-project.dexemple.fr/ga/images-display")
         .then(response => {
-          this.imageDiplayed = response.data
-          this.isLoadingStat1 = false
-        })
+          this.imageDiplayed = response.data;
+          this.isLoadingStat1 = false;
+        });
 
       axios
-        .get('https://www.api.front-end-project.dexemple.fr/ga/percent-good-answer')
+        .get(
+          "https://www.api.front-end-project.dexemple.fr/ga/percent-good-answer"
+        )
         .then(response => {
-          this.percentGoodAnswer = response.data
-          this.isLoadingStat2 = false
-        })
+          this.percentGoodAnswer = response.data;
+          this.isLoadingStat2 = false;
+        });
 
       axios
-        .get('https://www.api.front-end-project.dexemple.fr/ga/average-find-it')
+        .get("https://www.api.front-end-project.dexemple.fr/ga/average-find-it")
         .then(response => {
-          this.moyFindIn = response.data
-          this.isLoadingStat3 = false
-        })
+          this.moyFindIn = response.data;
+          this.isLoadingStat3 = false;
+        });
     }
   },
-  created () {
-    this.getHighScore()
-    this.getStats()
+  created() {
+    this.getHighScore();
+    this.getStats();
   },
   components: {
     AnimatedNumber
   }
-
-}
+};
 </script>
 
 <style >
