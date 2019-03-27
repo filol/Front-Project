@@ -114,19 +114,19 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import AnimatedNumber from "animated-number-vue";
-import axios from "axios";
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import AnimatedNumber from 'animated-number-vue'
+import axios from 'axios'
 
 export default {
   data: () => {
     return {
       scores: [
         {
-          pseudo: "No scores",
-          score: ""
+          pseudo: 'No scores',
+          score: ''
         }
       ],
       imageDiplayed: 1,
@@ -136,78 +136,78 @@ export default {
       isLoadingStat1: true,
       isLoadingStat2: true,
       isLoadingStat3: true
-    };
+    }
   },
   methods: {
-    async getHighScore() {
-      var db = firebase.firestore();
-      var scores = [];
-      db.collection("highscore")
+    async getHighScore () {
+      var db = firebase.firestore()
+      var scores = []
+      db.collection('highscore')
         .get()
         .then(querySnapshot => {
-          querySnapshot.forEach(function(doc) {
-            var score = doc.data().score;
-            var docRef = db.collection("users").doc(doc.data().idUser);
-            docRef.get().then(function(doc) {
+          querySnapshot.forEach((doc) => {
+            var score = doc.data().score
+            var docRef = db.collection('users').doc(doc.data().idUser)
+            docRef.get().then((doc) => {
               // doc.data() is never undefined for query doc snapshots
               if (doc.exists) {
                 scores.push({
                   avatar: doc.data().avatar,
                   pseudo: doc.data().pseudo,
                   score: score
-                });
+                })
               } else {
                 scores.push({
-                  pseudo: "Anonymous",
+                  pseudo: 'Anonymous',
                   score: score
-                });
+                })
               }
-              scores.sort((a, b) => b.score - a.score);
+              scores.sort((a, b) => b.score - a.score)
               if (scores.length > 9) {
-                scores = scores.slice(0, 9);
+                scores = scores.slice(0, 9)
               }
-            });
-          });
-          this.scores = scores;
-          this.isLoadingTop = false;
+              this.scores = scores
+              this.isLoadingTop = false
+            })
+          })
         })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
+        .catch(function (error) {
+          console.error('Error writing document: ', error)
+        })
     },
-    getStats() {
+    getStats () {
       axios
-        .get("https://www.api.front-end-project.dexemple.fr/ga/images-display")
+        .get('https://www.api.front-end-project.dexemple.fr/ga/images-display')
         .then(response => {
-          this.imageDiplayed = response.data;
-          this.isLoadingStat1 = false;
-        });
+          this.imageDiplayed = response.data
+          this.isLoadingStat1 = false
+        })
 
       axios
         .get(
-          "https://www.api.front-end-project.dexemple.fr/ga/percent-good-answer"
+          'https://www.api.front-end-project.dexemple.fr/ga/percent-good-answer'
         )
         .then(response => {
-          this.percentGoodAnswer = response.data;
-          this.isLoadingStat2 = false;
-        });
+          this.percentGoodAnswer = response.data
+          this.isLoadingStat2 = false
+        })
 
       axios
-        .get("https://www.api.front-end-project.dexemple.fr/ga/average-find-it")
+        .get('https://www.api.front-end-project.dexemple.fr/ga/average-find-it')
         .then(response => {
-          this.moyFindIn = response.data;
-          this.isLoadingStat3 = false;
-        });
+          this.moyFindIn = response.data
+          this.isLoadingStat3 = false
+        })
     }
   },
-  created() {
-    this.getHighScore();
-    this.getStats();
+  created () {
+    this.getHighScore()
+    this.getStats()
   },
   components: {
     AnimatedNumber
   }
-};
+}
 </script>
 
 <style >
