@@ -1,9 +1,9 @@
 <template>
   <v-layout column class="mybackground" fill-height>
-    <v-layout row>
-      <v-flex class="ma-5">
+    <v-layout row wrap>
+
         <v-layout row class="display-1" text-md-center>
-          <v-flex xs12 sm12>
+          <v-flex xs12>
             <v-card color="primary">
               <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
               <v-list>
@@ -34,7 +34,7 @@
             </v-card>
           </v-flex>
         </v-layout>
-      </v-flex>
+
 
       <v-layout column>
         <v-card class="ma-5">
