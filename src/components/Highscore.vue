@@ -1,9 +1,8 @@
 <template>
-  <v-layout row>
+  <v-layout row class="mybackground">
     <v-flex xs12 sm6 offset-sm3>
-      <v-card>
+      <v-card class="my-5">
         <v-list subheader>
-          <v-subheader>HighScore</v-subheader>
           <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
             <v-list-tile-content>
               <v-list-tile-title>#{{index+1}}</v-list-tile-title>
@@ -18,7 +17,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-list-tile-title v-html="item.score"></v-list-tile-title>
+              <v-list-tile-title v-html="item.score+'pts'"></v-list-tile-title>
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
@@ -84,3 +83,9 @@ export default {
 
 }
 </script>
+
+<style>
+.mybackground {
+  background-color: var(--v-background-base);
+}
+</style>
