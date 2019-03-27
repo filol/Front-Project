@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex lg3 md4 sm12 xs12 order-md1 order-sm2 order-xs2>
         <v-card class="ma-5" color="primary">
-          <v-card-title class="justify-center white--text productsansboldfont">Top 10</v-card-title>
+          <v-card-title class="justify-center white--text productsansboldfont titlerules">Top 10</v-card-title>
           <v-list>
             <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoadingTop"></v-progress-circular>
             <v-list-tile v-else v-for="(item,index) in scores" :key="index" avatar>
