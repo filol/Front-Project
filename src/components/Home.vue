@@ -179,21 +179,21 @@ export default {
     },
     getStats () {
       axios
-        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/images-display')
+        .get('https://www.api.front-end-project.dexemple.fr/ga/images-display')
         .then(response => {
           this.imageDiplayed = response.data
           this.isLoadingStat1 = false
         })
 
       axios
-        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/percent-good-answer')
+        .get('https://www.api.front-end-project.dexemple.fr/ga/percent-good-answer')
         .then(response => {
           this.percentGoodAnswer = response.data
           this.isLoadingStat2 = false
         })
 
       axios
-        .get('http://www.dexemple.fr:8085/api-project-front-end_war/ga/average-find-it')
+        .get('https://www.api.front-end-project.dexemple.fr/ga/average-find-it')
         .then(response => {
           this.moyFindIn = response.data
           this.isLoadingStat3 = false
