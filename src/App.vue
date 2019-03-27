@@ -20,15 +20,17 @@
       </v-toolbar-items>
 
       <v-toolbar-items v-if="userConnected">
-        <v-flex fill-height>
-          <span class="white--text mr-3 aligner-name" v-if="hasPseudo">{{pseudo}}</span>
-          <span class="white--text mr-3 aligner-name" v-else>{{email}}</span>
-        </v-flex>
-        <v-flex>
-          <v-avatar :size="50">
-            <img :src="avatar" alt>
-          </v-avatar>
-        </v-flex>
+        <v-btn round color="primary" dark small class="badge-user">
+          <v-flex fill-height>
+            <span class="white--text mr-3 aligner-name" v-if="hasPseudo">{{pseudo}}</span>
+            <span class="white--text mr-3 aligner-name" v-else>{{email}}</span>
+          </v-flex>
+          <v-flex>
+            <v-avatar :size="50">
+              <img :src="avatar" alt>
+            </v-avatar>
+          </v-flex>
+        </v-btn>
       </v-toolbar-items>
       <v-menu class="hidemenu">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
@@ -196,5 +198,9 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.badge-user {
+  height: 50px !important;
 }
 </style>
