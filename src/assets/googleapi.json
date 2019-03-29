@@ -1,0 +1,23 @@
+{
+  "reportRequests": [
+    {
+      "viewId": "192085271",
+      "dateRanges": [
+        {
+          "startDate": "2019-03-01",
+          "endDate": "today"
+        }
+      ],
+      "metrics": [
+        {
+          "expression": "ga:totalEvents"
+        }
+      ],
+      "dimensions": [
+        {
+          "name": "ga:eventLabel"
+        }
+      ]
+    }
+  ]
+}

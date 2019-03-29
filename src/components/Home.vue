@@ -40,16 +40,16 @@
           <v-card-text>
             <p
               class="text-xs-left"
-            >On va vous présenter une photo, votre but est de trouver le mot associé à cette photos.</p>
+            >We will present you a photo, your goal is to find the word associated with this photos.</p>
             <br>
             <p
               class="text-xs-left"
-            >- Si vous échouez, on va vous remettre une autre photos avec le même mots clé, vous avez le droit à 10 essais mais attention à chaque faux essaie vous perdez 10 points</p>
-            <p class="text-xs-left">- Si vous réussiser, bravo, vous gagnez 50 pts</p>
+            >- If you fail, we will give you another photos with the same keywords, you have the right to 10 tests but beware of each false try you lose 10 points</p>
+            <p class="text-xs-left">- If you succeed, bravo, you win 50 pts</p>
             <br>
             <p
               class="text-xs-left"
-            >Vous voulez apparaitre dans le TOP 10 ? N'oubliez pas de vous connecter d'abords pour que votre score soit enregistré</p>
+            >Want to appear in the TOP 10? Do not forget to log in first for your score to be saved</p>
           </v-card-text>
         </v-card>
 
@@ -71,7 +71,7 @@
               ></v-progress-circular>
               <animated-number :value="imageDiplayed" round="1" :duration="5000" v-else/>
             </v-card-text>
-            <v-card-text>images affichées</v-card-text>
+            <v-card-text>displayed images</v-card-text>
           </v-card>
         </v-slide-y-transition>
       </v-flex>
@@ -89,7 +89,7 @@
               ></v-progress-circular>
               <animated-number :value="percentGoodAnswer" round="10" :duration="5000" v-else/>%
             </v-card-text>
-            <v-card-text>de bonnes réponses</v-card-text>
+            <v-card-text>of good answers</v-card-text>
           </v-card>
         </v-slide-y-transition>
       </v-flex>
@@ -106,7 +106,7 @@
             ></v-progress-circular>
             <animated-number :value="moyFindIn" round="10" :duration="5000" v-else/>
           </v-card-text>
-          <v-card-text>nombre d'image en moyenne pour trouver le mot</v-card-text>
+          <v-card-text>average image to find the word</v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
