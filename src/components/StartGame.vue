@@ -46,6 +46,12 @@
           type="error"
           v-if="hasError"
         >Error : {{ errorMsg }}</v-alert>
+        <v-alert
+          transition="scale-transition"
+          :value="true"
+          type="info"
+          v-if="notConnected"
+        >You are not logged in, your score will not be saved</v-alert>
         <div class="text-xs-center">
           <v-btn class="white--text" color="primary" @click="start">Start !</v-btn>
         </div>
@@ -65,6 +71,7 @@ export default {
       selectedAvatar: 1,
       pseudo: '',
       hasError: false,
+      notConnected: true,
       errorMsg: '',
       items: [
         {
@@ -125,7 +132,13 @@ export default {
       var docRef = db.collection('users').where('pseudoInsensitve', '==', this.pseudo.toUpperCase())
 
       if (this.pseudo.length > 15) {
-        this.errorMsg = 'La taille maximun d\'un pseudo est de 15 caractère, déso, pas déso'
+        this.errorMsg = 'La taille maximun d\'un pseudo est de 15 caractères, déso, pas déso'
+        this.hasError = true
+        return
+      }
+
+      if (this.pseudo.length < 3) {
+        this.errorMsg = 'La taille minmun d\'un pseudo est de 5 caractères, déso, pas déso'
         this.hasError = true
         return
       }
@@ -170,6 +183,7 @@ export default {
     const currentUser = firebase.auth().currentUser
 
     if (currentUser) {
+      this.notConnected = false
       var db = firebase.firestore()
       var docRef = db.collection('users').where('email', '==', currentUser.email)
 
