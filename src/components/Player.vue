@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="playerContainer" justify-center order-sm1 order-xs2 md3>
+  <v-flex justify-center order-sm1 order-xs2 md3>
     <v-layout row class="display-1" text-md-center>
       <v-flex xs12 sm12>
         <v-card color="grey darken-1">
@@ -48,9 +48,6 @@ export default {
 </script>
 
 <style scopped>
-.playerContainer {
-  /* background-color: yellow; FOR DEBUG PURPOSES ONLY !! */
-}
 .playerAvatar {
   margin-top: 10px;
 }

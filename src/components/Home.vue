@@ -40,12 +40,12 @@
           <v-card-text>
             <p
               class="text-xs-left"
-            >We will present you a photo, your goal is to find the word associated with this photos.</p>
+            >We will choose for you a random word to guess and to do so, you will be granted an image in relation with it.</p>
             <br>
             <p
               class="text-xs-left"
-            >- If you fail, we will give you another photos with the same keywords, you have the right to 10 tests but beware of each false try you lose 10 points</p>
-            <p class="text-xs-left">- If you succeed, bravo, you win 50 pts</p>
+            >- If you fail guessing the word, you will loose 10 pts and then have another shot with another related photo. You will have 10 tries per word max.</p>
+            <p class="text-xs-left">- If you succeed, bravo, you win 50 pts.</p>
             <br>
             <p
               class="text-xs-left"

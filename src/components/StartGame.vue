@@ -132,13 +132,13 @@ export default {
       var docRef = db.collection('users').where('pseudoInsensitve', '==', this.pseudo.toUpperCase())
 
       if (this.pseudo.length > 15) {
-        this.errorMsg = 'La taille maximun d\'un pseudo est de 15 caractères, déso, pas déso'
+        this.errorMsg = 'The maximum size of a nickname is 15 characters. Sorry, not sorry'
         this.hasError = true
         return
       }
 
       if (this.pseudo.length < 3) {
-        this.errorMsg = 'La taille minmun d\'un pseudo est de 5 caractères, déso, pas déso'
+        this.errorMsg = 'The minimum size of a nickname is 5 characters. Sorry, not sorry'
         this.hasError = true
         return
       }
@@ -147,11 +147,11 @@ export default {
         if (!snapshot.empty) {
           if (currentUser) {
             if (!snapshot.docs[0].data().email === currentUser.email) {
-              this.errorMsg = 'Impossible se pseudo appartient à quelqu\'un'
+              this.errorMsg = 'Impossible this nickname belongs to someone'
               this.hasError = true
             }
           } else {
-            this.errorMsg = 'Impossible se pseudo appartient à quelqu\'un'
+            this.errorMsg = 'Impossible this nickname belongs to someone'
             this.hasError = true
           }
         } else {
