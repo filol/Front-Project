@@ -61,6 +61,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import { EventBus } from './plugins/event-bus.js'
 
 export default {
   name: 'App',
@@ -91,6 +92,7 @@ export default {
   },
   methods: {
     updateMenu () {
+      console.log('update menu')
       var currentUser = firebase.auth().currentUser
       if (currentUser) {
         this.userConnected = true
@@ -144,6 +146,10 @@ export default {
   },
   created () {
     firebase.auth().onAuthStateChanged(this.updateMenu)
+    EventBus.$on('update-menu', () => {
+      console.log('event receive')
+      this.updateMenu()
+    })
   }
 }
 </script>

@@ -79,6 +79,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import { EventBus } from '../plugins/event-bus.js'
 
 export default {
   props: {
@@ -176,30 +177,59 @@ export default {
           }
         } else {
           if (currentUser) {
-            // add pseudo to databse
-            db.collection('users').add({
-              pseudo: mypseudo,
-              pseudoInsensitve: mypseudo.toUpperCase(),
-              email: currentUser.email,
-              avatar: myavatar
+            var docRef2 = db.collection('users').where('email', '==', currentUser.email)
+            docRef2.get().then((snapshot) => {
+              if (!snapshot.empty) {
+                // set data to databse because user already exist
+                db.collection('users').doc(snapshot.docs[0].id).set({
+                  pseudo: mypseudo,
+                  pseudoInsensitve: mypseudo.toUpperCase(),
+                  email: currentUser.email,
+                  avatar: myavatar
+                })
+                  .then(() => {
+                    console.log('Document successfully written!')
+                    this.emitUpdateMenu()
+                    // this.$root.updateMenu()
+                    // firebase.auth().updateCurrentUser(currentUser)
+                    router.push({ name: 'game' })
+                  })
+                  .catch(function (error) {
+                    console.error('Error writing document: ', error)
+                  })
+              } else {
+                // add data to databse
+                db.collection('users').add({
+                  pseudo: mypseudo,
+                  pseudoInsensitve: mypseudo.toUpperCase(),
+                  email: currentUser.email,
+                  avatar: myavatar
+                })
+                  .then(() => {
+                    console.log('Document successfully written!')
+                    router.push({ name: 'game' })
+                  })
+                  .catch((error) => {
+                    console.error('Error writing document: ', error)
+                  })
+              }
+            }).catch((error) => {
+              console.log('Error getting document:', error)
             })
-              .then(function () {
-                console.log('Document successfully written!')
-                router.push({ name: 'game' })
-              })
-              .catch(function (error) {
-                console.error('Error writing document: ', error)
-              })
           } else {
             router.push({ name: 'game' })
           }
         }
-      }).catch(function (error) {
+      }).catch((error) => {
         console.log('Error getting document:', error)
       })
     },
     reverse () {
       this.pseudo = this.pseudo.split('').reverse().join('')
+    },
+    emitUpdateMenu () {
+      // Send the event on a channel (i-got-clicked) with a payload (the click count.)
+      EventBus.$emit('update-menu')
     }
   },
   async created () {
