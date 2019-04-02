@@ -30,7 +30,7 @@
             :value="true"
             type="error"
             v-if="hasLose"
-          >You Lose ! You didn't find the word {{ previousWord }} in 10 attempt</v-alert>
+          >You Lose ! You didn't find the word {{ previousWord }} in {{ maxTry }} attempt</v-alert>
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs8 offset-xs2>
               <v-btn color="#b99458" large @click="validate">Validate</v-btn>
@@ -56,6 +56,7 @@ export default {
   data: () => {
     return {
       playerWordInput: '',
+      maxTry: 5,
       image: '',
       word: '',
       numImg: 0,
@@ -76,12 +77,12 @@ export default {
       const {
         data: { photos }
       } = await this.$http('https://api.pexels.com/v1/search', {
-        params: { query: this.word, per_page: 10, page: 1 },
+        params: { query: this.word, per_page: this.maxTry, page: 1 },
         headers: { Authorization: '563492ad6f9170000100000162a8ad9e59b34275992db6f903ddd7b9' }
       })
       this.isLoading = false
 
-      if (photos.length < 10) this.setWord()
+      if (photos.length < this.maxTry) this.setWord()
       else {
         const currentUser = firebase.auth().currentUser
         if (currentUser) {
@@ -94,6 +95,7 @@ export default {
         this.images = photos
         this.image = photos[0].src.landscape
         this.numImg = 0
+        this.$store.commit('SET_SCORE', 0)
       }
     },
     sleep (ms) {
@@ -121,7 +123,6 @@ export default {
       }
     },
     async validate () {
-      console.log('validation')
 
       if (this.playerWordInput === this.word) {
         this.$ga.event({
@@ -142,7 +143,7 @@ export default {
           eventLabel: 'goodAnswer',
           eventValue: 1
         })
-      } else {
+      } else {  // incorrect
         this.$store.commit('DECREASE_SCORE', 10)
         this.numImg++
         this.$ga.event({
@@ -151,7 +152,7 @@ export default {
           eventLabel: 'falseAnswer',
           eventValue: 1
         })
-        if (this.numImg === 10) {
+        if (this.numImg === 5) {
           this.$ga.event({
             eventCategory: 'game',
             eventAction: 'neverFind',
@@ -166,6 +167,7 @@ export default {
           this.hasLose = false
         } else this.image = this.images[this.numImg].src.landscape
       }
+      this.playerWordInput = ''
     }
   },
   components: { Player }

@@ -44,12 +44,18 @@
             <br>
             <p
               class="text-xs-left"
-            >- If you fail guessing the word, you will loose 10 pts and then have another shot with another related photo. You will have 10 tries per word max.</p>
-            <p class="text-xs-left">- If you succeed, bravo, you win 50 pts.</p>
+            >- If you succeed, bravo, you win 50 pts.</p>
+            <p class="text-xs-left">- If you fail guessing the word, you will loose 10 pts and then have another shot with another related photo.
+            </p>
             <br>
             <p
               class="text-xs-left"
-            >Want to appear in the TOP 10? Do not forget to log in first for your score to be saved</p>
+            >- Watch out! If you fail 10 tries in a row, it's game over!</p>
+            <br>
+            <p
+              class="text-xs-left">
+              Want to appear in the TOP 10? Do not forget to log in first for your score to be saved.
+            </p>
           </v-card-text>
         </v-card>
 

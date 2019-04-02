@@ -21,6 +21,9 @@ const mutations = {
   },
   DECREASE_SCORE: (state, points) => {
     state.score -= points
+  },
+  SET_SCORE: (state, points) => {
+    state.score = points
   }
 }
 
