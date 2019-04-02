@@ -203,6 +203,7 @@ export default {
                   avatar: myavatar
                 })
                   .then(() => {
+                    this.emitUpdateMenu()
                     router.push({ name: 'game' })
                   })
                   .catch((error) => {

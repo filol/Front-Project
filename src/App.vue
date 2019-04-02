@@ -33,7 +33,7 @@
               </v-flex>
               <v-flex>
                 <v-avatar :size="50">
-                  <img :src="avatar" alt>
+                  <img :src="avatar">
                 </v-avatar>
               </v-flex>
             </v-btn>

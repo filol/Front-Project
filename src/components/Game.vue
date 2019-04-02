@@ -25,12 +25,12 @@
             :value="true"
             type="success"
             v-if="hasWin"
-          >Congratulation ! You find the word {{ previousWord }}</v-alert>
+          >Congratulation ! You find the word "{{ previousWord }}"</v-alert>
           <v-alert
             :value="true"
             type="error"
             v-if="hasLose"
-          >You Lose ! You didn't find the word {{ previousWord }} in {{ maxTry }} attempt</v-alert>
+          >You Lose ! You didn't find the word "{{ previousWord }}"" in {{ maxTry }} attempt</v-alert>
           <v-layout row class="display-1" text-md-center>
             <v-flex justify-center xs8 offset-xs2>
               <v-btn color="#b99458" large @click="validate">Validate</v-btn>
@@ -122,6 +122,9 @@ export default {
       }
     },
     async validate () {
+      this.hasWin = false
+      this.hasLose = false
+
       if (this.playerWordInput === this.word) {
         this.$ga.event({
           eventCategory: 'game',
@@ -133,7 +136,7 @@ export default {
         this.setWord()
         this.$store.commit('INCREASE_SCORE', 50)
         this.hasWin = true
-        await this.sleep(2000)
+        await this.sleep(10000)
         this.hasWin = false
         this.$ga.event({
           eventCategory: 'game',
@@ -161,7 +164,7 @@ export default {
           this.setWord()
           this.hasLose = true
           this.addScoreToDatabase()
-          await this.sleep(2000)
+          await this.sleep(10000)
           this.hasLose = false
         } else this.image = this.images[this.numImg].src.landscape
       }
