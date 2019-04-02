@@ -188,10 +188,7 @@ export default {
                   avatar: myavatar
                 })
                   .then(() => {
-                    console.log('Document successfully written!')
                     this.emitUpdateMenu()
-                    // this.$root.updateMenu()
-                    // firebase.auth().updateCurrentUser(currentUser)
                     router.push({ name: 'game' })
                   })
                   .catch(function (error) {
@@ -206,7 +203,6 @@ export default {
                   avatar: myavatar
                 })
                   .then(() => {
-                    console.log('Document successfully written!')
                     router.push({ name: 'game' })
                   })
                   .catch((error) => {
@@ -228,7 +224,6 @@ export default {
       this.pseudo = this.pseudo.split('').reverse().join('')
     },
     emitUpdateMenu () {
-      // Send the event on a channel (i-got-clicked) with a payload (the click count.)
       EventBus.$emit('update-menu')
     }
   },

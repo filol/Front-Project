@@ -43,7 +43,7 @@
         </v-card>
 
         <v-flex xs12>
-          <v-layout row fill-height>
+          <v-layout row fill-height v-bind="binding">
             <v-flex text-xs-center xs3>
               <v-card class="ma-5 pa-5">
                 <v-avatar :size="100" color="grey lighten-4">
@@ -88,10 +88,13 @@
 
 <script>
 export default {
-  data: () => {
-    return {}
-  },
-  methods: {}
+  computed: {
+    binding () {
+      const binding = {}
+      if (this.$vuetify.breakpoint.smAndDown) binding.column = true
+      return binding
+    }
+  }
 }
 </script>
 
