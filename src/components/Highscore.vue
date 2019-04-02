@@ -5,11 +5,11 @@
         <v-progress-circular indeterminate color="primary" class="ma-5" v-if="isLoading"></v-progress-circular>
         <v-list subheader v-else>
           <v-list-tile v-for="(item,index) in scores" :key="index" avatar>
-            <v-list-tile-content>
+            <v-list-tile-content v-if="!isError">
               <v-list-tile-title>#{{index+1}}</v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-avatar>
+            <v-list-tile-avatar v-if="!isError">
               <img :src="item.avatar">
             </v-list-tile-avatar>
 
@@ -17,7 +17,7 @@
               <v-list-tile-title v-html="item.pseudo"></v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-action>
+            <v-list-tile-action v-if="!isError">
               <v-list-tile-title v-html="item.score+'pts'"></v-list-tile-title>
             </v-list-tile-action>
           </v-list-tile>
@@ -46,7 +46,8 @@ export default {
         pseudo: 'No scores',
         score: ''
       }],
-      isLoading: true
+      isLoading: true,
+      isError: false
     }
   },
   methods: {
@@ -79,6 +80,7 @@ export default {
                   })
                   this.scores = scores
                   this.isLoading = false
+                  this.isError = false
                 })
                   .catch(function (error) {
                     console.error('Error writing document: ', error)
@@ -87,6 +89,10 @@ export default {
             }).catch(function (error) {
               console.log('Error getting document:', error)
             })
+        } else {
+          this.scores = [{ pseudo: 'You need to be connected' }]
+          this.isError = true
+          this.isLoading = false
         }
       } else {
         db.collection('highscore').get().then((querySnapshot) => {
@@ -114,6 +120,7 @@ export default {
           })
           this.scores = scores
           this.isLoading = false
+          this.isError = false
         })
           .catch(function (error) {
             console.error('Error writing document: ', error)
