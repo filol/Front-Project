@@ -50,7 +50,6 @@ import dictionary from '../assets/dictionary'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { fips } from 'crypto'
 
 export default {
   data: () => {
@@ -123,7 +122,6 @@ export default {
       }
     },
     async validate () {
-
       if (this.playerWordInput === this.word) {
         this.$ga.event({
           eventCategory: 'game',
@@ -143,7 +141,7 @@ export default {
           eventLabel: 'goodAnswer',
           eventValue: 1
         })
-      } else {  // incorrect
+      } else { // incorrect
         this.$store.commit('DECREASE_SCORE', 10)
         this.numImg++
         this.$ga.event({

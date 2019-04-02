@@ -35,6 +35,11 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 export default {
+  props: {
+    onlyme: {
+      type: String
+    }
+  },
   data () {
     return {
       scores: [{
@@ -47,36 +52,73 @@ export default {
   methods: {
     async getHighScore () {
       var db = firebase.firestore()
+      var currentUser
       const scores = []
-      db.collection('highscore').get().then((querySnapshot) => {
-        querySnapshot.forEach(function (doc) {
-          var score = doc.data().score
-          var docRef = db.collection('users').doc(doc.data().idUser)
-          docRef.get().then(function (doc) {
-            // doc.data() is never undefined for query doc snapshots
-            if (doc.exists) {
-              scores.push({
-                avatar: doc.data().avatar,
-                pseudo: doc.data().pseudo,
-                score: score
-              })
-            } else {
-              scores.push({
-                pseudo: 'Anonymous',
-                score: score
-              })
-            }
-            scores.sort((a, b) =>
-              b.score - a.score
-            )
+
+      if (this.onlyme === 'true') {
+        currentUser = firebase.auth().currentUser
+        if (currentUser) {
+          db.collection('users').where('email', '==', currentUser.email).get()
+            .then((snapshot) => {
+              if (!snapshot.empty) {
+                const idAccount = snapshot.docs[0].id
+                const pseudo = snapshot.docs[0].data().pseudo
+                const avatar = snapshot.docs[0].data().avatar
+                db.collection('highscore').where('idUser', '==', idAccount).get().then((querySnapshot) => {
+                  querySnapshot.forEach(function (doc) {
+                    const score = doc.data().score
+                    scores.push({
+                      avatar: avatar,
+                      pseudo: pseudo,
+                      score: score
+                    })
+
+                    scores.sort((a, b) =>
+                      b.score - a.score
+                    )
+                  })
+                  this.scores = scores
+                  this.isLoading = false
+                })
+                  .catch(function (error) {
+                    console.error('Error writing document: ', error)
+                  })
+              }
+            }).catch(function (error) {
+              console.log('Error getting document:', error)
+            })
+        }
+      } else {
+        db.collection('highscore').get().then((querySnapshot) => {
+          querySnapshot.forEach(function (doc) {
+            var score = doc.data().score
+            var docRef = db.collection('users').doc(doc.data().idUser)
+            docRef.get().then(function (doc) {
+              // doc.data() is never undefined for query doc snapshots
+              if (doc.exists) {
+                scores.push({
+                  avatar: doc.data().avatar,
+                  pseudo: doc.data().pseudo,
+                  score: score
+                })
+              } else {
+                scores.push({
+                  pseudo: 'Anonymous',
+                  score: score
+                })
+              }
+              scores.sort((a, b) =>
+                b.score - a.score
+              )
+            })
           })
+          this.scores = scores
+          this.isLoading = false
         })
-        this.scores = scores
-        this.isLoading = false
-      })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
+          .catch(function (error) {
+            console.error('Error writing document: ', error)
+          })
+      }
     }
   },
   created () {

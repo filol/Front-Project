@@ -37,14 +37,27 @@ const config = {
 firebase.initializeApp(config)
 
 const routes = [
-  { path: '/startgame', name: 'startgame', component: StartGame },
+  {
+    path: '/startgame',
+    name: 'startgame',
+    component: StartGame,
+    props: route => ({
+      force: route.query.force
+    })
+  },
   { path: '/game', name: 'game', component: Game },
   { path: '/', component: Home },
   { path: '/about', component: About },
   { path: '/signup', component: SignUp },
   { path: '/login', component: Login },
   { path: '/signout', component: SignOut },
-  { path: '/highscore', component: Highscore }
+  {
+    path: '/highscore',
+    component: Highscore,
+    props: route => ({
+      onlyme: route.query.onlyme
+    })
+  }
 ]
 
 const router = new VueRouter({ routes })

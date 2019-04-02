@@ -20,17 +20,24 @@
       </v-toolbar-items>
 
       <v-toolbar-items v-if="userConnected">
-        <v-btn round color="primary" dark small class="badge-user">
-          <v-flex fill-height>
-            <span class="white--text mr-3 aligner-name" v-if="hasPseudo">{{pseudo}}</span>
-            <span class="white--text mr-3 aligner-name" v-else>{{email}}</span>
-          </v-flex>
-          <v-flex>
-            <v-avatar :size="50">
-              <img :src="avatar" alt>
-            </v-avatar>
-          </v-flex>
-        </v-btn>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn round color="primary" dark small class="badge-user" v-on="on">
+              <v-flex fill-height>
+                <span class="white--text mr-3 aligner-name" v-if="hasPseudo">{{pseudo}}</span>
+                <span class="white--text mr-3 aligner-name" v-else>{{email}}</span>
+              </v-flex>
+              <v-flex>
+                <v-avatar :size="50">
+                  <img :src="avatar" alt>
+                </v-avatar>
+              </v-flex>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile v-for="item in userMenu" :key="item.title" :to="item.link">{{ item.title }}</v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
       <v-menu class="hidemenu">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
@@ -68,6 +75,12 @@ export default {
           { title: 'About', link: '/about' },
           { title: 'Login', link: '/login' },
           { title: 'SignUp', link: '/signup' }
+        ],
+      userMenu:
+        [
+          { title: 'My scores', link: '/highscore?onlyme=true' },
+          { title: 'Change my pseudo', link: '/startgame?force=true' },
+          { title: 'SignOut', link: '/signout' }
         ],
       userConnected: false,
       pseudo: '',
@@ -110,8 +123,7 @@ export default {
             { title: 'Home', link: '/' },
             { title: 'Game', link: '/startgame' },
             { title: 'Highscore', link: '/highscore' },
-            { title: 'About', link: '/about' },
-            { title: 'SignOut', link: '/signout' }
+            { title: 'About', link: '/about' }
           ]
       } else {
         this.userConnected = false

@@ -56,7 +56,7 @@
             <v-flex text-xs-center xs3>
               <v-card class="ma-5 pa-5">
                 <v-avatar :size="100" color="grey lighten-4">
-                  <img src="@/assets/photos/Francois.png" alt>
+                  <img src="https://randomuser.me/api/portraits/lego/0.jpg" alt>
                 </v-avatar>
                 <h3 class="mt-3">François Dexemple</h3>
               </v-card>
@@ -65,7 +65,7 @@
             <v-flex text-xs-center xs3>
               <v-card class="ma-5 pa-5">
                 <v-avatar :size="100" color="grey lighten-4">
-                  <img src="@/assets/photos/Gregoire.png" alt>
+                  <img src="https://randomuser.me/api/portraits/lego/1.jpg" alt>
                 </v-avatar>
                 <h3 class="mt-3">Grégoire Monet</h3>
               </v-card>
