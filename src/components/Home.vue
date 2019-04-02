@@ -42,20 +42,16 @@
               class="text-xs-left"
             >We will choose for you a random word to guess and to do so, you will be granted an image in relation with it.</p>
             <br>
+            <p class="text-xs-left">- If you succeed, bravo, you win 50 pts.</p>
             <p
               class="text-xs-left"
-            >- If you succeed, bravo, you win 50 pts.</p>
-            <p class="text-xs-left">- If you fail guessing the word, you will loose 10 pts and then have another shot with another related photo.
-            </p>
+            >- If you fail guessing the word, you will loose 10 pts and then have another shot with another related photo.</p>
+            <br>
+            <p class="text-xs-left">- Watch out! If you fail 10 tries in a row, it's game over!</p>
             <br>
             <p
               class="text-xs-left"
-            >- Watch out! If you fail 10 tries in a row, it's game over!</p>
-            <br>
-            <p
-              class="text-xs-left">
-              Want to appear in the TOP 10? Do not forget to log in first for your score to be saved.
-            </p>
+            >Want to appear in the TOP 10? Do not forget to log in first for your score to be saved.</p>
           </v-card-text>
         </v-card>
 
@@ -63,9 +59,45 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap justify-space-around>
-      <v-flex xs4>
-        <v-slide-y-transition>
+    <v-container grid-list-xl>
+      <v-layout wrap justify-space-around v-bind="binding">
+        <v-flex xs4>
+          <v-slide-y-transition>
+            <v-card class="ma-5" height="65%">
+              <v-card-text class="title-card-stats productsansboldfont primary--text">
+                <v-progress-circular
+                  indeterminate
+                  size="64"
+                  color="primary"
+                  class="ma-5"
+                  v-if="isLoadingStat1"
+                ></v-progress-circular>
+                <animated-number :value="imageDiplayed" round="1" :duration="5000" v-else/>
+              </v-card-text>
+              <v-card-text>displayed images</v-card-text>
+            </v-card>
+          </v-slide-y-transition>
+        </v-flex>
+
+        <v-flex xs4>
+          <v-slide-y-transition>
+            <v-card class="ma-5" height="65%">
+              <v-card-text class="title-card-stats productsansboldfont primary--text">
+                <v-progress-circular
+                  indeterminate
+                  size="32"
+                  color="primary"
+                  class="ma-5"
+                  v-if="isLoadingStat2"
+                ></v-progress-circular>
+                <animated-number :value="percentGoodAnswer" round="10" :duration="5000" v-else/>%
+              </v-card-text>
+              <v-card-text>of good answers</v-card-text>
+            </v-card>
+          </v-slide-y-transition>
+        </v-flex>
+
+        <v-flex xs4>
           <v-card class="ma-5" height="65%">
             <v-card-text class="title-card-stats productsansboldfont primary--text">
               <v-progress-circular
@@ -73,49 +105,15 @@
                 size="64"
                 color="primary"
                 class="ma-5"
-                v-if="isLoadingStat1"
+                v-if="isLoadingStat3"
               ></v-progress-circular>
-              <animated-number :value="imageDiplayed" round="1" :duration="5000" v-else/>
+              <animated-number :value="moyFindIn" round="10" :duration="5000" v-else/>
             </v-card-text>
-            <v-card-text>displayed images</v-card-text>
+            <v-card-text>average image to find the word</v-card-text>
           </v-card>
-        </v-slide-y-transition>
-      </v-flex>
-
-      <v-flex xs4>
-        <v-slide-y-transition>
-          <v-card class="ma-5" height="65%">
-            <v-card-text class="title-card-stats productsansboldfont primary--text">
-              <v-progress-circular
-                indeterminate
-                size="32"
-                color="primary"
-                class="ma-5"
-                v-if="isLoadingStat2"
-              ></v-progress-circular>
-              <animated-number :value="percentGoodAnswer" round="10" :duration="5000" v-else/>%
-            </v-card-text>
-            <v-card-text>of good answers</v-card-text>
-          </v-card>
-        </v-slide-y-transition>
-      </v-flex>
-
-      <v-flex xs4>
-        <v-card class="ma-5" height="65%">
-          <v-card-text class="title-card-stats productsansboldfont primary--text">
-            <v-progress-circular
-              indeterminate
-              size="64"
-              color="primary"
-              class="ma-5"
-              v-if="isLoadingStat3"
-            ></v-progress-circular>
-            <animated-number :value="moyFindIn" round="10" :duration="5000" v-else/>
-          </v-card-text>
-          <v-card-text>average image to find the word</v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </v-layout>
 </template>
 
@@ -214,6 +212,13 @@ export default {
   },
   components: {
     AnimatedNumber
+  },
+  computed: {
+    binding () {
+      const binding = {}
+      if (this.$vuetify.breakpoint.smAndDown) binding.column = true
+      return binding
+    }
   }
 }
 </script>
