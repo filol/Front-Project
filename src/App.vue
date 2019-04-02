@@ -2,9 +2,13 @@
   <v-app>
     <v-toolbar app class="elevation-0 boxhead productsansfont" color="background">
       <router-link to="/">
-        <v-toolbar-title class="headline text-uppercase">
+        <v-toolbar-title class="headline text-uppercase hide-max-logo">
           <span class="white--text productsansboldfont">RECOGNIZE</span>
           <span class="font-weight-light white--text productsansfont">MY CAT</span>
+        </v-toolbar-title>
+        <v-toolbar-title class="headline text-uppercase hide-mini-logo">
+          <span class="white--text productsansboldfont">R</span>
+          <span class="font-weight-light white--text productsansfont">MC</span>
         </v-toolbar-title>
       </router-link>
 
@@ -187,6 +191,17 @@ export default {
 }
 @media (max-width: 901px) {
   .hidebuttons {
+    display: none;
+  }
+}
+
+@media (min-width: 440px) {
+  .hide-mini-logo {
+    display: none;
+  }
+}
+@media (max-width: 440px) {
+  .hide-max-logo {
     display: none;
   }
 }
