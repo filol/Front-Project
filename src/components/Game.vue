@@ -50,6 +50,7 @@ import dictionary from '../assets/dictionary'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import { fips } from 'crypto'
 
 export default {
   data: () => {
@@ -82,7 +83,14 @@ export default {
 
       if (photos.length < 10) this.setWord()
       else {
-        console.log(this.word)
+        const currentUser = firebase.auth().currentUser
+        if (currentUser) {
+          if (currentUser.email === 'fdex24@gmail.com' ||
+            currentUser.email === 'adrien.dat@efrei.net' ||
+            currentUser.email === 'baptiste.perreaux@efrei.net' ||
+            currentUser.email === 'fifi.dex@gmail.com' ||
+            currentUser.email === 'gregoire.monet@gmail.com') { console.log(this.word) }
+        }
         this.images = photos
         this.image = photos[0].src.landscape
         this.numImg = 0
