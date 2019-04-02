@@ -1,5 +1,6 @@
 <template>
   <v-layout fill-height column class="mybackground">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
     <v-container xs6>
       <v-layout column fill-height justify-space-around text-xs-center xs>
         <v-flex text-xs-center>
@@ -8,7 +9,21 @@
 
         <v-flex>
           <v-flex offset-sm4 sm4 text-sm-center>
-            <v-text-field dark label="Enter your pseudo" outline single-line v-on:keyup="setPseudo"></v-text-field>
+            <v-text-field
+              dark
+              label="Enter your pseudo"
+              outline
+              single-line
+              v-model="pseudo"
+              v-on:keyup="setPseudo"
+              class="mr-2"
+            >
+              <template v-slot:append-outer pa-4>
+                <span @click="reverse" style="ml-2 font-size: 2.5em; color: white;">
+                  <i class="fas fa-undo"></i>
+                </span>
+              </template>
+            </v-text-field>
           </v-flex>
           <v-spacer></v-spacer>
 
@@ -177,6 +192,9 @@ export default {
       }).catch(function (error) {
         console.log('Error getting document:', error)
       })
+    },
+    reverse () {
+      this.pseudo = this.pseudo.split('').reverse().join('')
     }
   },
   async created () {
