@@ -151,11 +151,13 @@ export default {
             docRef.get().then((doc) => {
               // doc.data() is never undefined for query doc snapshots
               if (doc.exists) {
-                scores.push({
-                  avatar: doc.data().avatar,
-                  pseudo: doc.data().pseudo,
-                  score: score
-                })
+                if (!scores.some(e => e.pseudo === doc.data().pseudo)) {
+                  scores.push({
+                    avatar: doc.data().avatar,
+                    pseudo: doc.data().pseudo,
+                    score: score
+                  })
+                }
               } else {
                 scores.push({
                   pseudo: 'Anonymous',
@@ -164,7 +166,7 @@ export default {
               }
               scores.sort((a, b) => b.score - a.score)
               if (scores.length > 9) {
-                scores = scores.slice(0, 9)
+                scores = scores.slice(0, 10)
               }
               this.scores = scores
               this.isLoadingTop = false
